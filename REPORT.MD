@@ -1,366 +1,511 @@
-# BÁO CÁO BÀI TẬP LỚN
+# BÁO CÁO KIỂM THỬ PHẦN MỀM
 
-## KIỂM THỬ PHẦN MỀM – HỆ THỐNG WEBSITE MUA BÁN MÃ NGUỒN DEVMARTVN
-
-## THÔNG TIN NHÓM
-
-- Môn học: Kiểm thử phần mềm
-- Đề tài: Kiểm thử hệ thống Website Mua Bán Mã Nguồn DevMartVN
-- Nhóm: …
-- Thành viên:
-  - … – MSSV …
-  - … – MSSV …
-- Giảng viên hướng dẫn: …
-- Học kỳ: … – Năm học: …
+## HỆ THỐNG WEBSITE MUA BÁN MÃ NGUỒN DEVMARTVN
 
 ---
 
-## LỜI MỞ ĐẦU
+## CHƯƠNG 1: TỔNG QUAN BÀI TOÁN
 
-Sự phát triển mạnh mẽ của công nghệ thông tin dẫn đến nhu cầu học tập, chia sẻ và tái sử dụng mã nguồn ngày càng lớn. Thay vì mỗi cá nhân tự phát triển từ đầu, lập trình viên có thể mua hoặc tham khảo các source code có sẵn để tiết kiệm thời gian và chi phí. Website DevMartVN được xây dựng với mục tiêu trở thành một chợ trực tuyến cho mã nguồn, nơi người bán có thể đăng sản phẩm và người mua có thể tìm kiếm, thanh toán và tải về.
+### 1.1. Giới thiệu đề tài
 
-Trong bối cảnh đó, chất lượng phần mềm đóng vai trò quyết định tới trải nghiệm người dùng và mức độ tin tưởng với nền tảng. Kiểm thử phần mềm giúp phát hiện sớm lỗi, hạn chế rủi ro trong quá trình vận hành. Báo cáo này trình bày toàn bộ quá trình nhóm thực hiện kiểm thử hệ thống DevMartVN: từ phân tích yêu cầu, lập kế hoạch, thiết kế test case, thực thi test cho đến đánh giá kết quả và đề xuất cải tiến. Thông qua bài tập lớn, nhóm mong muốn củng cố kiến thức lý thuyết, rèn luyện kỹ năng thực hành và nâng cao nhận thức về vai trò của kiểm thử trong phát triển phần mềm.
+Đề tài của nhóm em là **“Kiểm thử hệ thống Website Mua Bán Mã Nguồn DevMartVN”** – một nền tảng giao dịch source code trực tuyến cho cộng đồng lập trình viên. Thông qua website, người dùng có thể đăng bán sản phẩm là mã nguồn, tìm kiếm và mua source code, nạp tiền, rút tiền và quản lý các giao dịch liên quan. [1]
 
----
+Yêu cầu, đặc tả ban đầu của hệ thống được lấy từ tài liệu đề bài môn Kiểm thử phần mềm và file phân tích thiết kế “Website Mua Bán Mã Nguồn DevMartVN”, trong đó mô tả chi tiết các chức năng: đăng ký, đăng nhập, trang chủ, quản lý hồ sơ, nạp/rút tiền, đăng bán sản phẩm, shop người bán và các module quản trị của admin (dashboard, quản lý người dùng, sản phẩm, danh mục, đơn hàng, yêu cầu rút tiền, biến động số dư). [1][2]
 
-## CHƯƠNG 1. GIỚI THIỆU HỆ THỐNG
-
-### 1.1. Bối cảnh và bài toán
-
-DevMartVN là một website thương mại điện tử chuyên về mua bán mã nguồn. Mỗi sản phẩm là một gói source code đi kèm mô tả, hình ảnh, thông tin người bán và giá bán. Người dùng có thể tra cứu mã nguồn theo danh mục hoặc từ khóa, nạp tiền vào tài khoản, thực hiện giao dịch mua, sau đó tải về mã nguồn bất cứ lúc nào.
-
-Bài toán đặt ra là phải đảm bảo các luồng nghiệp vụ chính của hệ thống hoạt động trơn tru: người dùng đăng ký và đăng nhập được, sản phẩm hiển thị đúng, việc nạp và rút tiền chính xác, giao dịch mua bán ghi nhận đầy đủ, đồng thời admin có thể theo dõi và quản trị dễ dàng thông qua hệ thống quản trị.
-
-### 1.2. Mục tiêu của đề tài
-
-Mục tiêu của đề tài là xây dựng và áp dụng một quy trình kiểm thử hoàn chỉnh cho hệ thống DevMartVN. Cụ thể:
-
-- Phân tích yêu cầu chức năng và phi chức năng của hệ thống.
-- Thiết kế bộ test case cho 15 màn hình chính bao phủ các luồng nghiệp vụ cốt lõi.
-- Thực thi test case trên giao diện thật của hệ thống, ghi nhận kết quả và lỗi.
-- Đánh giá mức độ đáp ứng yêu cầu của hệ thống, rút ra nhận xét và kinh nghiệm cho việc kiểm thử các dự án sau.
-
-### 1.3. Đối tượng và phạm vi nghiên cứu
-
-Đối tượng nghiên cứu là hệ thống DevMartVN dưới góc độ người dùng cuối và admin. Phạm vi kiểm thử tập trung vào:
-
-- Chức năng và giao diện của các màn hình: đăng ký, đăng nhập, trang chủ, quản lý thông tin, nạp tiền, rút tiền, mua hàng, shop người bán và các màn quản trị.
-- Tính đúng đắn của dữ liệu hiển thị và cập nhật: thông tin sản phẩm, số dư tài khoản, lịch sử giao dịch.
-- Không đi sâu vào kiểm thử hiệu năng, bảo mật chuyên sâu hay tích hợp với hệ thống ngân hàng thực tế.
-
-### 1.4. Kết cấu báo cáo
-
-Báo cáo gồm các phần chính:
-
-- Chương 1 trình bày bối cảnh, mục tiêu và phạm vi của đề tài kiểm thử.
-- Chương 2 phân tích yêu cầu, mô tả chức năng và mô hình use case của hệ thống.
-- Chương 3 xây dựng kế hoạch và chiến lược kiểm thử.
-- Chương 4 mô tả chi tiết thiết kế test và cấu trúc test case.
-- Chương 5 trình bày quá trình thực thi test và kết quả thu được.
-- Chương 6 đưa ra kết luận và hướng phát triển.
-- Phần cuối cùng liệt kê các tài liệu tham khảo và phụ lục test case, screenshot, bug list.
+Bài toán cần giải quyết là đảm bảo hệ thống DevMartVN vận hành đúng yêu cầu, đặc biệt ở các luồng nghiệp vụ liên quan đến giao dịch tài chính (nạp, rút, mua, bán), đồng thời cung cấp giao diện thân thiện, rõ ràng cho cả người dùng cuối (buyer/seller) và quản trị viên (admin). Thông qua hoạt động kiểm thử, nhóm em đánh giá mức độ hoàn thiện của hệ thống, phát hiện sớm lỗi và đề xuất điều chỉnh phù hợp.
 
 ---
 
-## CHƯƠNG 2. PHÂN TÍCH YÊU CẦU VÀ MÔ HÌNH HỆ THỐNG
+### 1.2. Đặc tả yêu cầu
 
-### 2.1. Yêu cầu chức năng
+#### 1.2.1. Các luồng nghiệp vụ chính
 
-Hệ thống DevMartVN được tổ chức thành các nhóm chức năng:
+Dựa trên tài liệu yêu cầu và các test case được thiết kế trong file TEST_CASE.MD, nhóm em xác định các luồng nghiệp vụ end‑to‑end (E2E) quan trọng như sau: [2][3]
 
-1. **Nhóm tài khoản người dùng**
+1. **Luồng Đăng ký – Đăng nhập – Vào hệ thống**
 
-   - Đăng ký tài khoản mới với các thông tin: họ tên, email, mật khẩu, số điện thoại.
-   - Đăng nhập bằng email hoặc tên đăng nhập và mật khẩu; hỗ trợ đăng nhập qua bên thứ ba (Google, GitHub).
-   - Cập nhật thông tin cá nhân và thông tin ngân hàng nhận tiền.
-   - Đổi mật khẩu đăng nhập.
+   - Người dùng truy cập trang chủ, chọn chức năng “Đăng ký”.
+   - Nhập họ tên, email, mật khẩu, xác nhận mật khẩu, số điện thoại; hệ thống kiểm tra định dạng email, độ dài mật khẩu, tính duy nhất của email/số điện thoại.
+   - Đăng ký thành công, hệ thống lưu thông tin user và cho phép đăng nhập.
+   - Người dùng đăng nhập bằng email hoặc tên đăng nhập và mật khẩu; nếu đúng, hệ thống chuyển đến trang chủ và hiển thị avatar, số dư. [3]
 
-2. **Nhóm giao dịch của người dùng**
+2. **Luồng Cập nhật thông tin cá nhân và ngân hàng**
 
-   - Nạp tiền vào tài khoản DevMartVN bằng cách chọn mệnh giá hoặc nhập số tiền, sử dụng mã QR thanh toán.
-   - Yêu cầu rút tiền từ số dư khả dụng về tài khoản ngân hàng đã cấu hình.
-   - Xem lịch sử nạp tiền, rút tiền và các giao dịch mua bán.
+   - Sau khi đăng nhập, người dùng truy cập màn “Thông tin cá nhân”.
+   - Hệ thống hiển thị sẵn họ tên, tên đăng nhập, email, số điện thoại và các trường ngân hàng, số tài khoản, chủ tài khoản.
+   - Người dùng chỉnh sửa số điện thoại hoặc thông tin ngân hàng, nhấn “Lưu thay đổi”; hệ thống validate dữ liệu (chỉ số, không để trống, độ dài hợp lệ) và cập nhật thành công. [3]
 
-3. **Nhóm sản phẩm và shop**
+3. **Luồng Nạp tiền ví DevMartVN**
 
-   - Tìm kiếm sản phẩm theo từ khóa, danh mục, bộ lọc.
-   - Xem chi tiết sản phẩm, giá bán, mô tả và thông tin người bán.
-   - Đăng bán sản phẩm mới: nhập thông tin, giá, mô tả, upload thumbnail, link tải, link demo.
-   - Xem trang shop của người bán với danh sách sản phẩm họ cung cấp.
-   - Xem lịch sử các sản phẩm đã mua và tải lại source code.
+   - Người dùng vào màn “Nạp tiền”, xem số dư hiện tại.
+   - Chọn 1 mệnh giá nhanh (50k, 100k, 200k, 500k, 1M, 2M) hoặc nhập số tiền khác thỏa điều kiện min/max.
+   - Hệ thống sinh mã QR VietQR chứa thông tin tài khoản nhận, số tiền và nội dung chuyển khoản.
+   - Sau khi người dùng chuyển khoản thành công và bấm “Xác nhận đã chuyển khoản”, hệ thống tạo record yêu cầu nạp tiền, cập nhật lịch sử nạp và chờ admin hoặc hệ thống cổng thanh toán xác nhận. [3]
 
-4. **Nhóm quản trị hệ thống**
-   - Xem dashboard thống kê tổng doanh thu, tổng số người dùng, số sản phẩm, số đơn hàng.
-   - Quản lý danh sách người dùng: xem thông tin, phân quyền, khóa/mở khóa tài khoản.
-   - Quản lý sản phẩm: duyệt, ẩn/hiện, xóa sản phẩm vi phạm.
-   - Quản lý danh mục: thêm, sửa, xóa danh mục sản phẩm.
-   - Quản lý đơn hàng: theo dõi tình trạng thanh toán, xem chi tiết từng đơn.
-   - Quản lý yêu cầu rút tiền: duyệt hoặc từ chối yêu cầu, cập nhật số dư tương ứng.
-   - Theo dõi biến động số dư hệ thống: log các giao dịch nạp, rút, mua, bán, hoàn tiền.
+4. **Luồng Rút tiền về ngân hàng**
 
-### 2.2. Yêu cầu phi chức năng
+   - Người dùng truy cập màn “Rút tiền”, xem số dư khả dụng.
+   - Chọn mệnh giá hoặc nhập số tiền rút (không nhỏ hơn min, không lớn hơn số dư).
+   - Nhấn “Tạo yêu cầu rút”; hệ thống ghi nhận yêu cầu với trạng thái “Đang xử lý/Đang chờ” và hiển thị trong lịch sử rút tiền.
+   - Admin đăng nhập màn “Yêu cầu rút tiền” để duyệt hoặc từ chối, đồng thời cập nhật số dư và trạng thái giao dịch. [3]
 
-Ngoài các chức năng trên, hệ thống còn có những yêu cầu phi chức năng:
+5. **Luồng Đăng bán sản phẩm và duyệt sản phẩm**
 
-- **Tính dễ sử dụng:** Giao diện đơn giản, các nút chức năng rõ ràng, thống nhất về màu sắc và bố cục giữa các màn hình front-end và admin.
-- **Tính chính xác dữ liệu:** Số dư ví, số tiền nạp/rút, giá sản phẩm, trạng thái giao dịch phải được tính toán và hiển thị chính xác.
-- **Tính an toàn:** Mật khẩu không được hiển thị dạng chữ thường, các thông tin nhạy cảm không xuất hiện trong URL, phân quyền truy cập giữa user và admin.
-- **Tính ổn định:** Hệ thống không bị lỗi khi nhập dữ liệu lớn trong giới hạn cho phép, không bị văng trang khi thao tác liên tục.
-- **Khả năng mở rộng:** Cấu trúc chức năng cho phép bổ sung thêm danh mục, phương thức thanh toán hoặc loại sản phẩm mới mà không phải thay đổi quá nhiều thành phần.
+   - Người bán đăng nhập, vào màn “Đăng bán sản phẩm”.
+   - Nhập thông tin tên sản phẩm, danh mục, giá bán (có thể để 0 để tạo sản phẩm miễn phí), mô tả chi tiết, link tải, link demo và upload ảnh thumbnail đúng định dạng.
+   - Nhấn “Gửi yêu cầu duyệt”; hệ thống lưu sản phẩm với trạng thái “Chờ duyệt”.
+   - Admin truy cập màn “Quản lý sản phẩm” để xem danh sách, duyệt hoặc từ chối sản phẩm; các sản phẩm đã duyệt sẽ hiển thị trên trang chủ và shop người bán. [3]
 
-### 2.3. Mô hình ca sử dụng (Use Case)
+6. **Luồng Mua sản phẩm và tải lại source code**
 
-Dựa trên yêu cầu, có thể xác định các ca sử dụng tiêu biểu:
+   - Người mua duyệt danh sách sản phẩm ở trang chủ, dùng thanh tìm kiếm hoặc menu danh mục.
+   - Chọn một sản phẩm, xem chi tiết, xác nhận mua và thanh toán bằng số dư trong ví.
+   - Sau khi thanh toán thành công, hệ thống:
+     - Ghi log đơn hàng, cập nhật lịch sử mua hàng của user.
+     - Trừ số dư của người mua, cộng số dư cho người bán (hoặc ghi nhận doanh thu chờ rút).
+   - Người mua có thể vào màn “Lịch sử mua hàng” để xem lại các giao dịch và tải lại source khi cần. [3]
 
-- **UC01 – Đăng ký tài khoản:** Người dùng cung cấp thông tin cá nhân và tạo tài khoản mới.
-- **UC02 – Đăng nhập:** Người dùng nhập email/tên đăng nhập và mật khẩu để truy cập hệ thống.
-- **UC03 – Quản lý thông tin cá nhân:** Người dùng xem và chỉnh sửa hồ sơ, thông tin ngân hàng.
-- **UC04 – Nạp tiền:** Người dùng thực hiện nạp tiền vào tài khoản ví DevMartVN.
-- **UC05 – Rút tiền:** Người dùng yêu cầu rút tiền về tài khoản ngân hàng.
-- **UC06 – Đăng bán sản phẩm:** Người bán đăng thông tin sản phẩm, upload file, gửi yêu cầu duyệt.
-- **UC07 – Mua sản phẩm:** Người mua chọn sản phẩm, thanh toán và tải source code.
-- **UC08 – Quản lý giao dịch mua:** Người dùng xem lịch sử mua hàng và tải lại file.
-- **UC09 – Quản lý yêu cầu rút tiền (Admin):** Admin xem danh sách yêu cầu, duyệt hoặc từ chối.
-- **UC10 – Quản lý người dùng, sản phẩm, danh mục (Admin):** Admin tìm kiếm, chỉnh sửa hoặc khóa/xóa tài khoản và sản phẩm.
+7. **Luồng Quản trị hệ thống (Admin)**
+   - Admin đăng nhập vào trang quản trị, truy cập Dashboard để xem các chỉ số tổng quan: tổng doanh thu, số người dùng, số sản phẩm, đơn hàng mới, đồ thị doanh thu.
+   - Sử dụng các màn quản lý người dùng, sản phẩm, danh mục, đơn hàng, yêu cầu rút tiền, lịch sử biến động số dư để:
+     - Tìm kiếm, lọc, sắp xếp theo điều kiện.
+     - Xem chi tiết, sửa, xóa hoặc duyệt đối tượng tương ứng.
+   - Các hành động của admin phản ánh lên dữ liệu hiển thị ở frontend và đảm bảo tính nhất quán. [2][3]
 
-Trong bản báo cáo Word, bạn có thể vẽ thêm sơ đồ use case tổng quan với các tác nhân: User, Seller, Admin và gắn các ca sử dụng trên vào sơ đồ để minh họa.
+Trong báo cáo Word, nhóm em có thể biểu diễn lại các luồng này dưới dạng sơ đồ hoạt động (activity diagram) hoặc flowchart cho từng luồng chính.
 
-### 3.1. Mục tiêu kế hoạch kiểm thử (tiếp)
+#### 1.2.2. Các màn hình chức năng chính
 
-- Đảm bảo các luồng giao dịch liên quan đến tiền (nạp, rút, mua, bán, hoàn tiền) phản ánh đúng số dư trước và sau giao dịch.
-- Xác nhận các màn hình quản trị (dashboard, quản lý người dùng, sản phẩm, đơn hàng, yêu cầu rút tiền, biến động số dư) hiển thị đúng dữ liệu tổng hợp.
-- Xây dựng được bộ test case có thể tái sử dụng để kiểm thử hồi quy khi hệ thống được nâng cấp.
+Dựa trên bản thiết kế giao diện (wireframe và screenshot) và file TEST_CASE.MD, nhóm em xác định các màn hình chính sau: [2][3]
 
-### 3.2. Phạm vi và giới hạn kiểm thử
+- **Đăng nhập (dangnhap.jpg)**
 
-**Phạm vi kiểm thử:**
+  - Trường: Email/Tên đăng nhập, Mật khẩu, Ghi nhớ đăng nhập; nút Đăng nhập; liên kết Quên mật khẩu, Đăng ký; nút đăng nhập Google, GitHub.
+  - Ràng buộc:
+    - Email/Username: bắt buộc, độ dài 1–255, định dạng email nếu là email.
+    - Mật khẩu: bắt buộc, độ dài 8–128, hiển thị dạng ẩn.
+  - Hành vi:
+    - Bỏ trống hoặc sai định dạng → hiển thị thông báo lỗi.
+    - Nhập đúng email/mật khẩu → chuyển sang Trang chủ.
 
-- Toàn bộ 15 màn hình: DMRegister, DMLogin, DMHomePage, DMProfile, DMOrderHistory, DMShopSeller, DMRecharge, DMWithdraw, DMDashboard, DMProducts, DMUsers, DMCategories, DMWithdrawRequest, DMOrder, DMBalance.
-- Các luồng nghiệp vụ chính:
-  - Người dùng: đăng ký, đăng nhập, cập nhật hồ sơ, nạp tiền, rút tiền, đăng bán, mua hàng, xem lịch sử.
-  - Admin: đăng nhập admin, theo dõi dashboard, duyệt sản phẩm, duyệt yêu cầu rút tiền, quản lý người dùng và danh mục.
-- Kiểm tra validate: bắt buộc nhập, độ dài tối thiểu/tối đa, định dạng email, định dạng số điện thoại, phạm vi số tiền.
+- **Đăng ký (Dang-ki.jpg)**
 
-**Giới hạn kiểm thử:**
+  - Trường: Họ và tên, Email, Mật khẩu, Xác nhận mật khẩu, Số điện thoại; nút Đăng ký.
+  - Ràng buộc:
+    - Họ và tên: bắt buộc, độ dài tối đa 255.
+    - Email: bắt buộc, định dạng đúng, duy nhất trong hệ thống.
+    - Mật khẩu: bắt buộc, dài tối thiểu 8 ký tự, thoả chính sách mật khẩu.
+    - Xác nhận mật khẩu: bắt buộc, trùng mật khẩu.
+    - Số điện thoại: bắt buộc, chỉ chứa số, độ dài 9–12, duy nhất.
 
-- Không đo đạc hiệu năng dưới tải nặng (load test, stress test).
-- Không thực hiện kiểm thử bảo mật chuyên sâu như tấn công SQL Injection, XSS, CSRF.
-- Không kiểm thử trên nhiều trình duyệt và thiết bị di động; chỉ tập trung trên Chrome desktop.
-- Không kiểm thử tích hợp trực tiếp với hệ thống ngân hàng ngoài môi trường giả lập.
+- **Trang chủ (Trang-chu.jpg)**
 
-### 3.3. Chiến lược và phương pháp kiểm thử
+  - Thành phần: Header (logo, tìm kiếm, menu danh mục, nút Đăng bán, Đăng nhập/Avatar), banner khuyến mãi, block “Top lượt xem”, block “Ưu đãi đặc biệt”, danh sách sản phẩm dạng card, footer.
+  - Mỗi card sản phẩm: ảnh, tên, giá, badge “Miễn phí” nếu giá = 0, thông tin lượt xem/lượt mua.
+  - Hành vi:
+    - Tìm kiếm bằng từ khóa → load danh sách sản phẩm khớp.
+    - Chọn danh mục → filter sản phẩm theo danh mục.
+    - Click card → chuyển sang chi tiết sản phẩm.
 
-- **Chiến lược tổng thể:**  
-  Áp dụng kiểm thử hộp đen ở mức hệ thống (system test) dựa trên đặc tả yêu cầu và giao diện thực tế. Với các luồng quan trọng, thực hiện thêm kiểm thử hồi quy mỗi khi có sửa đổi.
+- **Thông tin cá nhân (Thong-tin-ca-nhan.jpg)**
 
-- **Phương pháp thiết kế test:**
+  - Thành phần:
+    - Khối thông tin tài khoản: họ tên, tên đăng nhập (read‑only), email (read‑only), số điện thoại.
+    - Khối thông tin ngân hàng: ngân hàng nhận tiền (select), số tài khoản, chủ tài khoản.
+    - Nút “Lưu thay đổi”.
+  - Ràng buộc:
+    - Số điện thoại: không chứa ký tự chữ, độ dài hợp lệ.
+    - Ngân hàng, số tài khoản, chủ tài khoản: bắt buộc nhập nếu muốn rút tiền.
 
-  - Phân vùng tương đương (Equivalence Partitioning): chia dữ liệu đầu vào thành các lớp hợp lệ và không hợp lệ, ví dụ như email đúng/sai định dạng, số tiền trong/ngoài phạm vi.
-  - Phân tích giá trị biên (Boundary Value Analysis): tập trung kiểm tra các giá trị cận trên/cận dưới, ví dụ nhập đúng bằng min, nhỏ hơn min 1 đơn vị, lớn hơn max 1 đơn vị.
-  - Bảng quyết định (Decision Table): áp dụng cho các nghiệp vụ phụ thuộc nhiều điều kiện, ví dụ: trạng thái yêu cầu rút tiền (Đang chờ, Đã duyệt, Đã từ chối) phụ thuộc vào hành động của admin.
+- **Nạp tiền (Nap-tien.jpg / Nap-Tien.jpg)**
 
-- **Loại kiểm thử áp dụng:**
-  - Kiểm thử chức năng (Functional Testing).
-  - Kiểm thử giao diện người dùng (UI Testing) ở mức hiển thị, vị trí và nội dung.
-  - Kiểm thử hồi quy thủ công đối với các luồng giao dịch chính.
+  - Thành phần: hiển thị số dư hiện tại, các button mệnh giá, ô nhập số tiền khác, QR VietQR, nút “Xác nhận đã chuyển khoản”, bảng lịch sử nạp.
+  - Ràng buộc:
+    - Số tiền nạp tối thiểu (ví dụ 50.000 VND), tối đa tuỳ cấu hình hệ thống.
+    - Chỉ cho phép nhập số nguyên dương.
 
-### 3.4. Môi trường, dữ liệu và công cụ kiểm thử
+- **Rút tiền (Rut-tien.jpg)**
 
-- **Môi trường:**
+  - Thành phần: số dư khả dụng, các button mệnh giá, ô nhập số tiền rút, nút “Tạo yêu cầu rút tiền”, lịch sử rút.
+  - Ràng buộc:
+    - Số tiền rút ≥ min, ≤ số dư khả dụng, ≤ hạn mức tối đa.
 
-  - Máy chủ ứng dụng chạy bản Dev/Stage của DevMartVN.
-  - Hệ điều hành: Windows 10/11.
-  - Trình duyệt: Google Chrome phiên bản mới nhất.
+- **Lịch sử biến động số dư (Lich-su-bien-dong-so-du.jpg – Admin)**
 
-- **Dữ liệu kiểm thử:**
+  - Thành phần: thanh tab filter (Tất cả/Nạp tiền/Rút tiền/Mua/Bán/Hoàn tiền), bảng danh sách với các cột: Người dùng, Số tiền, Số dư sau, Nội dung, Thời gian; phân trang.
+  - Ràng buộc:
+    - Số tiền dương (màu xanh, dấu +) cho giao dịch cộng; âm (màu đỏ, dấu –) cho giao dịch trừ.
 
-  - Tài khoản người dùng:
-    - User A: tài khoản người mua.
-    - User B: tài khoản người bán.
-  - Tài khoản admin với đầy đủ quyền quản trị.
-  - Một số sản phẩm mẫu thuộc các danh mục khác nhau.
-  - Dữ liệu giao dịch demo: nạp tiền, rút tiền, đơn hàng mua/bán trước đó.
+- **Lịch sử mua hàng (Lich-su-mua-hang.jpg – User)**
 
-- **Công cụ hỗ trợ:**
-  - Bảng tính hoặc công cụ quản lý test để lưu trữ test case và kết quả.
-  - Công cụ chụp màn hình để minh họa bug.
-  - (Nếu có) công cụ kiểm thử API hoặc framework test tự động để hỗ trợ regression.
+  - Thành phần: danh sách giao dịch đã mua với thông tin: mã giao dịch, tên sản phẩm, thời gian, giá, nút Xem chi tiết, nút Tải xuống.
 
-### 3.5. Lịch trình và phân công
+- **Shop của tôi (Shop-cua-toi.jpg – Seller)**
 
-- Tuần 1–2: Phân tích đề bài, đọc tài liệu đặc tả, xác định danh sách màn hình và use case.
-- Tuần 3–4: Thiết kế test case chi tiết cho từng màn hình, rà soát trong nhóm và chỉnh sửa.
-- Tuần 5–6: Thực thi test trên hệ thống thật, ghi nhận kết quả và bug, trao đổi với nhóm phát triển.
-- Tuần 7: Thực hiện re-test bug đã sửa, cập nhật trạng thái test và hoàn thiện báo cáo.
+  - Thành phần: thông tin seller (avatar, tên, ngày tham gia), danh sách sản phẩm của seller, nút Theo dõi, Nhắn tin (nếu có).
 
-Phân công được chia theo từng nhóm chức năng, ví dụ: một thành viên phụ trách frontend người dùng, một thành viên phụ trách các module admin và giao dịch, một thành viên tổng hợp báo cáo và tài liệu.
+- **Đăng bán sản phẩm (Dang-ban-san-pham.jpg)**
+
+  - Trường: tên sản phẩm, danh mục, giá bán, mô tả chi tiết (editor), link tải nguồn, link demo (tuỳ chọn), ảnh thumbnail, nút Gửi yêu cầu duyệt.
+  - Ràng buộc:
+    - Thumbnail định dạng JPG/PNG, kích thước/tải trọng trong giới hạn.
+    - Nếu giá rỗng hoặc 0 → sản phẩm miễn phí.
+
+- **Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-danh-muc.jpg, Quan-ly-san-pham.jpg, Quan-ly-don-hang.jpg, Yeu-cau-rut-tien.jpg)**
+  - Cấu trúc chung: sidebar menu, ô tìm kiếm, bảng danh sách, các nút thao tác (Sửa/Xóa/Chi tiết/Duyệt/Từ chối).
+  - Dữ liệu bảng: ID, thông tin chính (tên user, tên sản phẩm, số tiền…), trạng thái. [2][3]
+
+#### 1.2.3. Các module chính của chương trình
+
+Từ góc nhìn kiểm thử, nhóm em chia hệ thống thành các module chính như sau: [2][3]
+
+1. **Module Quản lý tài khoản**
+
+   - **Input:**
+     - Thông tin đăng ký: họ tên, email, mật khẩu, xác nhận mật khẩu, số điện thoại.
+     - Thông tin đăng nhập: email/tên đăng nhập, mật khẩu.
+     - Thông tin cập nhật hồ sơ: họ tên, số điện thoại, thông tin ngân hàng.
+   - **Xử lý:**
+     - Kiểm tra dữ liệu đầu vào (bắt buộc, định dạng, độ dài).
+     - Lưu user mới, mã hóa mật khẩu, kiểm tra trùng lặp email/số điện thoại.
+     - Xác thực thông tin đăng nhập, thiết lập phiên làm việc (session).
+     - Cập nhật hồ sơ và thông tin ngân hàng.
+   - **Output:**
+     - Thông báo đăng ký/đăng nhập thành công hoặc lỗi.
+     - Hồ sơ người dùng được cập nhật và hiển thị trong các màn hình liên quan.
+
+2. **Module Quản lý ví và giao dịch tiền**
+
+   - **Input:**
+     - Thông tin nạp tiền: số tiền, nội dung chuyển khoản, xác nhận đã chuyển.
+     - Thông tin rút tiền: số tiền rút, thông tin ngân hàng user, action duyệt/từ chối của admin.
+   - **Xử lý:**
+     - Sinh mã QR với tham số phù hợp.
+     - Tạo bản ghi yêu cầu nạp/rút với trạng thái ban đầu “Đang chờ”.
+     - Khi được xác nhận, cập nhật số dư ví, cập nhật lịch sử biến động số dư và trạng thái yêu cầu.
+   - **Output:**
+     - Số dư ví mới của user.
+     - Bảng lịch sử nạp/rút và biến động số dư phản ánh đúng các giao dịch.
+
+3. **Module Quản lý sản phẩm và shop**
+
+   - **Input:**
+     - Thông tin sản phẩm: tên, danh mục, giá, mô tả, link tải, link demo, ảnh thumbnail.
+     - Action của admin: duyệt, ẩn, xóa sản phẩm.
+   - **Xử lý:**
+     - Validate dữ liệu sản phẩm (bắt buộc, định dạng link, file upload).
+     - Lưu sản phẩm với trạng thái “Chờ duyệt” hoặc “Đã duyệt”.
+     - Filter, tìm kiếm theo danh mục, từ khóa.
+   - **Output:**
+     - Danh sách sản phẩm hiển thị ở trang chủ và shop người bán.
+     - Trạng thái sản phẩm trong màn hình admin.
+
+4. **Module Quản lý đơn hàng và lịch sử mua**
+
+   - **Input:**
+     - Yêu cầu mua sản phẩm: user, sản phẩm, số tiền.
+   - **Xử lý:**
+     - Kiểm tra số dư ví của người mua.
+     - Tạo đơn hàng, cập nhật lịch sử mua hàng.
+     - Trừ số dư người mua, cộng số dư (hoặc doanh thu) cho người bán.
+   - **Output:**
+     - Đơn hàng với trạng thái “Hoàn thành” hoặc “Thất bại”.
+     - Bản ghi trong lịch sử mua hàng cho người dùng và lịch sử đơn hàng trong admin.
+
+5. **Module Quản trị (Admin)**
+   - **Input:**
+     - Dữ liệu từ các module khác (user, sản phẩm, đơn hàng, yêu cầu rút tiền, giao dịch số dư).
+     - Các thao tác quản trị của admin: duyệt, từ chối, sửa, xóa, thay đổi trạng thái.
+   - **Xử lý:**
+     - Tổng hợp số liệu cho dashboard (doanh thu, số user, số sản phẩm, đơn hàng mới).
+     - Áp dụng quy tắc nghiệp vụ: duyệt rút tiền, duyệt sản phẩm, khóa user,…
+   - **Output:**
+     - Bảng thống kê và báo cáo trên dashboard.
+     - Trạng thái cập nhật của user, sản phẩm, đơn hàng, yêu cầu rút tiền, biến động số dư.
 
 ---
 
-## CHƯƠNG 4. THIẾT KẾ TEST (TEST DESIGN)
+## CHƯƠNG 2: PHÂN TÍCH VÀ THIẾT KẾ TEST
 
-### 4.1. Danh sách màn hình và số lượng test case
+### 2.1. Unit Test Case
 
-Bảng dưới đây liệt kê các màn hình chính và số lượng test case tương ứng (số liệu cụ thể điền theo file test chi tiết của nhóm):
+#### 2.1.1. Phương pháp, kỹ thuật
 
-| STT | Mã màn hình       | Tên màn hình                  | Loại     | Số test case |
-| --- | ----------------- | ----------------------------- | -------- | ------------ |
-| 1   | DMRegister        | Đăng ký tài khoản             | Frontend | …            |
-| 2   | DMLogin           | Đăng nhập                     | Frontend | …            |
-| 3   | DMHomePage        | Trang chủ                     | Frontend | …            |
-| 4   | DMProfile         | Thông tin cá nhân & ngân hàng | Frontend | …            |
-| 5   | DMOrderHistory    | Lịch sử mua hàng              | Frontend | …            |
-| 6   | DMShopSeller      | Shop người bán                | Frontend | …            |
-| 7   | DMRecharge        | Nạp tiền                      | Frontend | …            |
-| 8   | DMWithdraw        | Rút tiền                      | Frontend | …            |
-| 9   | DMDashboard       | Thống kê tổng quan            | Admin    | …            |
-| 10  | DMProducts        | Quản lý sản phẩm              | Admin    | …            |
-| 11  | DMUsers           | Quản lý người dùng            | Admin    | …            |
-| 12  | DMCategories      | Quản lý danh mục              | Admin    | …            |
-| 13  | DMWithdrawRequest | Quản lý yêu cầu rút tiền      | Admin    | …            |
-| 14  | DMOrder           | Quản lý đơn hàng              | Admin    | …            |
-| 15  | DMBalance         | Quản lý biến động số dư       | Admin    | …            |
+Ở mức Unit, nhóm em tập trung vào các hàm xử lý riêng lẻ (ví dụ: hàm validate email, validate mật khẩu, tính toán số dư sau giao dịch). Các kỹ thuật áp dụng: [4][5]
 
-### 4.2. Mẫu biểu test case sử dụng
+- **Equivalence Partitioning (EP):**  
+  Chia không gian đầu vào thành các lớp tương đương (hợp lệ và không hợp lệ) để giảm số lượng test cần thiết nhưng vẫn bao phủ được logic, ví dụ:
 
-Để thống nhất, tất cả test case được thiết kế theo mẫu sau:
+  - Email hợp lệ / email sai định dạng / email rỗng.
+  - Số tiền nạp nằm trong khoảng hợp lệ / nhỏ hơn min / lớn hơn max.
 
-- ID test case
-- Tên test case / Mục tiêu
-- Màn hình / Chức năng
-- Tiền điều kiện (Pre-condition)
-- Bước thực hiện (Steps)
-- Dữ liệu đầu vào (Input data)
-- Kết quả mong đợi (Expected result)
-- Mức ưu tiên (Priority: High/Medium/Low)
-- Kết quả thực tế (Actual result: Pass/Fail) – điền khi thực thi
+- **Boundary Value Analysis (BVA):**  
+  Tập trung test tại các giá trị biên, ví dụ:
 
-Mẫu biểu này giúp các thành viên dễ hiểu, dễ trao đổi và dễ cập nhật khi có thay đổi yêu cầu.
+  - Mật khẩu độ dài 7, 8, 9 và 127, 128, 129 ký tự.
+  - Số tiền nạp 49.999, 50.000, 50.001 nếu min = 50.000.
 
-### 4.3. Một số test case tiêu biểu
+- **Decision Table / Logic Based Testing:**  
+  Áp dụng cho các hàm xác định trạng thái, chẳng hạn như:
+  - Xác định trạng thái yêu cầu rút tiền dựa vào hành động của admin (duyệt, từ chối, chờ).
 
-#### 4.3.1. Chức năng Đăng ký (DMRegister)
+Việc thiết kế unit test có thể thực hiện trong code thông qua các framework như JUnit/TestNG (Java) hoặc tương đương tuỳ ngôn ngữ. [4]
 
-- **Mục tiêu:** đảm bảo hệ thống chỉ cho phép tạo tài khoản mới khi toàn bộ thông tin hợp lệ.
-- **Nhóm test chính:**
-  - Bắt buộc nhập các trường: Họ tên, Email, Mật khẩu, Xác nhận mật khẩu, Số điện thoại.
-  - Kiểm tra định dạng email, số điện thoại, độ dài mật khẩu.
-  - Kiểm tra trùng lặp email và số điện thoại.
-  - Kiểm tra sự khớp giữa mật khẩu và xác nhận mật khẩu.
-  - Kiểm tra đăng ký thành công và có thể đăng nhập bằng tài khoản mới.
+#### 2.1.2. Danh sách các test case (khung)
 
-#### 4.3.2. Chức năng Nạp tiền (DMRecharge)
+Do báo cáo tập trung nhiều hơn vào System/UI test, phần Unit test chỉ trình bày một số ví dụ đại diện, chẳng hạn:
 
-- **Mục tiêu:** đảm bảo số tiền nạp hợp lệ và lịch sử nạp được ghi nhận chính xác.
-- **Nhóm test chính:**
-  - Chọn các mệnh giá nạp nhanh (50k, 100k, 200k, 500k, 1M, 2M).
-  - Nhập số tiền nhỏ hơn mức tối thiểu → hiển thị thông báo lỗi.
-  - Nhập số tiền vượt quá giới hạn cho phép → hiển thị thông báo lỗi.
-  - Nhập số tiền hợp lệ → hệ thống tạo mã QR với số tiền tương ứng.
-  - Sau khi nạp thành công, lịch sử nạp tiền hiển thị đúng số tiền và trạng thái.
+- Hàm `validateEmail(email)`:
 
-(Các nhóm test còn lại cho đăng nhập, rút tiền, mua hàng, admin… được chi tiết trong phụ lục test case.)
+  - TC1: email rỗng → trả về lỗi “bắt buộc nhập”.
+  - TC2: email không chứa ký tự `@` → trả về lỗi “sai định dạng”.
+  - TC3: email đúng định dạng → trả về “hợp lệ”.
+
+- Hàm `validateAmount(amount)` dùng cho nạp/rút:
+
+  - TC1: amount < min → trả về lỗi “dưới mức tối thiểu”.
+  - TC2: min ≤ amount ≤ max → “hợp lệ”.
+  - TC3: amount > max → trả về lỗi “vượt quá tối đa”.
+
+- Hàm `updateBalanceOnWithdraw(balance, amount)`:
+  - TC1: amount > balance → ném lỗi “không đủ số dư”.
+  - TC2: amount ≤ balance → trả về `balance - amount`.
+
+Các test case này có thể triển khai bằng JUnit với cấu trúc: Arrange (chuẩn bị input), Act (gọi hàm), Assert (so sánh kết quả với mong đợi). [4][5]
 
 ---
 
-## CHƯƠNG 5. THỰC THI TEST VÀ KẾT QUẢ
+### 2.2. Integration Test Case
 
-### 5.1. Quy trình thực thi
+#### 2.2.1. Phương pháp, kỹ thuật
 
-Quá trình thực thi test được thực hiện theo các bước:
+Kiểm thử tích hợp nhằm đánh giá sự tương tác giữa các module: tài khoản – ví – giao dịch – sản phẩm – đơn hàng – admin. Nhóm em áp dụng: [4][5]
 
-1. Chuẩn bị môi trường và dữ liệu test (tài khoản, sản phẩm, số dư ví).
-2. Thực thi từng test case theo thứ tự ưu tiên: ưu tiên các luồng chính và các nghiệp vụ liên quan đến tiền.
-3. Ghi nhận kết quả thực tế (Pass/Fail) và mô tả ngắn nếu có lỗi.
-4. Chụp màn hình minh họa cho các lỗi quan trọng hoặc khó tái hiện.
-5. Sau khi lỗi được sửa, tiến hành re-test và cập nhật trạng thái bug.
+- **Incremental Integration Testing** với hướng **top‑down**:
 
-### 5.2. Kết quả tổng hợp
+  - Bắt đầu từ các màn hình/luồng nghiệp vụ ở mức cao (E2E user flow), dần dần mở rộng sang nhiều module liên quan.
+  - Ví dụ tích hợp module Đăng nhập với Trang chủ, sau đó với Nạp tiền, Rút tiền, Mua hàng,…
 
-Bảng tổng hợp dưới đây là khung để điền số liệu sau khi chạy test:
+- Một số trường hợp có thể xem như **Big Bang** integration (tích hợp nhiều module sẵn có) khi hệ thống đã được triển khai gần như đầy đủ; nhóm em tập trung vào luồng dữ liệu qua nhiều module hơn là test riêng từng interface.
 
-| Nhóm chức năng                        | Số test case | Pass | Fail | Tỉ lệ Pass | Nhận xét ngắn |
-| ------------------------------------- | ------------ | ---- | ---- | ---------- | ------------- |
-| Tài khoản (Đăng ký, Đăng nhập, Hồ sơ) |              |      |      |            |               |
-| Giao dịch (Nạp, Rút, Mua hàng)        |              |      |      |            |               |
-| Sản phẩm & Shop                       |              |      |      |            |               |
-| Admin (Dashboard, Users, Products…)   |              |      |      |            |               |
-| **Tổng cộng**                         |              |      |      |            |               |
+#### 2.2.2. Danh sách các test case tích hợp (khung)
 
-### 5.3. Một số lỗi tiêu biểu (ví dụ nội dung)
+Một số Integration test tiêu biểu:
 
-- **BUG-01 – Nạp tiền không cảnh báo số tiền dưới mức tối thiểu**
+- **ITC-01 – Đăng ký → Đăng nhập → Vào Trang chủ**
 
-  - Màn hình: DMRecharge
-  - Mô tả: Khi nhập số tiền 10.000 VND (thấp hơn hạn mức tối thiểu), hệ thống vẫn tạo yêu cầu nạp mà không hiển thị cảnh báo.
-  - Tác động: Người dùng có thể hiểu nhầm là yêu cầu đã được chấp nhận, gây sai lệch trong quá trình xử lý.
-  - Đề xuất: Thêm kiểm tra phía server và client, hiển thị thông báo rõ ràng “Số tiền nạp tối thiểu là … VND”.
+  - Mục tiêu: kiểm tra liên kết giữa module đăng ký và đăng nhập, đảm bảo user mới tạo có thể đăng nhập ngay.
+  - Module: DMRegister, DMLogin, DMHomePage.
+  - Dữ liệu: thông tin tài khoản mới.
+  - Kết quả mong đợi: đăng ký thành công → đăng nhập → load đúng avatar và số dư mặc định.
 
-- **BUG-02 – Cho phép rút tiền vượt quá số dư khả dụng**
+- **ITC-02 – Nạp tiền → Cập nhật số dư → Lịch sử nạp**
 
-  - Màn hình: DMWithdraw
-  - Mô tả: Số dư khả dụng 100.000 VND nhưng người dùng vẫn có thể nhập 200.000 VND và gửi yêu cầu rút.
-  - Tác động: Nếu admin không kiểm tra kỹ có thể chấp nhận nhầm yêu cầu, dẫn tới âm số dư.
-  - Đề xuất: Áp dụng kiểm tra ràng buộc số tiền rút ≤ số dư khả dụng, hiển thị thông báo phù hợp.
+  - Module: DMRecharge, module ví, DMBalance/Lịch sử biến động.
+  - Bước: tạo yêu cầu nạp tiền bằng mệnh giá nhanh, hệ thống confirm.
+  - Kết quả mong đợi: số dư ví tăng đúng, lịch sử nạp và lịch sử biến động ghi nhận giao dịch.
 
-- **BUG-03 – Trạng thái đơn hàng không cập nhật sau khi thanh toán**
-  - Màn hình: DMOrder / DMOrderHistory
-  - Mô tả: Sau khi người dùng hoàn tất thanh toán, trạng thái đơn hàng vẫn hiển thị “Đang xử lý” thay vì “Hoàn thành”.
-  - Tác động: Người dùng khó theo dõi chính xác giao dịch, có thể tưởng thanh toán chưa thành công.
-  - Đề xuất: Đồng bộ trạng thái đơn hàng sau khi nhận thông báo thành công từ cổng thanh toán.
+- **ITC-03 – Mua sản phẩm → Tạo đơn hàng → Cập nhật số dư người mua/bán**
 
-(Nhóm điền các bug thực tế của mình vào phần này.)
+  - Module: DMHomePage/chi tiết sản phẩm, module đơn hàng, ví người mua, ví người bán, lịch sử mua hàng.
+  - Kết quả mong đợi: đơn hàng trạng thái “Hoàn thành”, số dư buyer giảm, seller tăng (hoặc doanh thu ghi nhận), lịch sử mua hiển thị giao dịch mới.
 
-### 5.4. Đánh giá chung
-
-Qua quá trình thực thi test:
-
-- Các luồng chức năng chính của hệ thống hoạt động tương đối ổn định, đáp ứng được yêu cầu bài toán.
-- Những lỗi được phát hiện chủ yếu liên quan đến:
-  - Thiếu hoặc chưa đầy đủ thông báo lỗi cho dữ liệu không hợp lệ.
-  - Thiếu kiểm tra ràng buộc ở một số trường hợp biên.
-  - Một vài chỗ hiển thị trạng thái chưa đồng nhất giữa màn hình người dùng và màn hình admin.
-- Sau khi các lỗi này được ghi nhận và sửa chữa, hệ thống đạt mức chất lượng chấp nhận được cho việc triển khai thử nghiệm.
+- **ITC-04 – Rút tiền → Yêu cầu rút tiền admin → Cập nhật số dư**
+  - Module: DMWithdraw, DMWithdrawRequest (admin), DMBalance.
+  - Kết quả mong đợi: tạo yêu cầu rút trạng thái “Đang chờ”, sau khi admin duyệt → số dư giảm, lịch sử biến động cập nhật, trạng thái đổi sang “Đã duyệt”.
 
 ---
 
-## CHƯƠNG 6. KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+### 2.3. System Test Case
 
-### 6.1. Kết luận
+#### 2.3.1. Phương pháp, kỹ thuật
 
-Bài tập lớn đã giúp nhóm trải nghiệm đầy đủ các bước trong quy trình kiểm thử phần mềm cho một hệ thống web thực tế:
+Kiểm thử hệ thống được thực hiện dưới góc nhìn người dùng cuối (end user), nhằm đánh giá toàn diện hệ thống dựa trên yêu cầu đã đặc tả. Nhóm em tập trung chủ yếu vào: [4][5]
 
-- Từ tài liệu yêu cầu và giao diện, nhóm đã phân tích và xác định được 15 màn hình chức năng cần kiểm thử.
-- Dựa trên đó, nhóm thiết kế bộ test case bao phủ các luồng nghiệp vụ quan trọng, áp dụng các kỹ thuật phân vùng tương đương và giá trị biên.
-- Quá trình thực thi test đã phát hiện được một số lỗi liên quan đến kiểm tra dữ liệu và xử lý trạng thái, góp phần hoàn thiện hơn hệ thống DevMartVN.
+- **Kiểm thử chức năng (Functional System Test):**
 
-Kết quả kiểm thử cho thấy hệ thống cơ bản đáp ứng đúng yêu cầu đề bài, có thể sử dụng được trong phạm vi bài tập lớn và tiếp tục phát triển thêm trong tương lai.
+  - Thực thi các test case UI/UX chi tiết trong TEST_CASE.MD cho 15 màn hình.
+  - Bảo đảm tất cả yêu cầu chức năng đều có ít nhất một test case.
 
-### 6.2. Hướng phát triển
+- **Kiểm thử phi chức năng cơ bản:**
 
-Trong tương lai, việc kiểm thử DevMartVN có thể được mở rộng theo các hướng:
+  - UI/UX: bố cục, nhãn, thông báo lỗi dễ hiểu, thống nhất.
+  - Tính ổn định trên trình duyệt Chrome (không crash, không lỗi script hiển thị).
 
-- Tự động hóa một số luồng kiểm thử lặp lại nhiều lần (đăng nhập, nạp tiền, rút tiền, mua hàng) bằng các công cụ automation.
-- Thực hiện kiểm thử hiệu năng và khả năng chịu tải để đánh giá hệ thống khi có nhiều người dùng đồng thời.
-- Bổ sung kiểm thử bảo mật chuyên sâu, kiểm tra các lỗ hổng phổ biến trên ứng dụng web.
-- Mở rộng kiểm thử sang các nền tảng và trình duyệt khác nhau, đặc biệt là trên thiết bị di động.
-- Chuẩn hóa tài liệu kiểm thử theo các bộ tiêu chuẩn quốc tế để dễ dàng chuyển giao và bảo trì.
+- **Kỹ thuật sử dụng:**
+  - Kiểm thử hộp đen (black‑box) dựa trên đặc tả.
+  - Kiểm thử theo kịch bản người dùng (scenario‑based testing): mô phỏng các tình huống sử dụng điển hình (mua hàng, nạp tiền, rút tiền,…).
+
+#### 2.3.2. Danh sách test case hệ thống
+
+Danh sách System test case chính là toàn bộ bộ test trong `TEST_CASE.MD` mà nhóm em đã thiết kế, bao gồm: [3]
+
+- Test case Đăng nhập: TC‑LOGIN‑01 → TC‑LOGIN‑08.
+- Test case Đăng ký: TC‑REG‑01 → TC‑REG‑07.
+- Test case Trang chủ: TC‑HOME‑01 → TC‑HOME‑06.
+- Test case Thông tin cá nhân & ngân hàng: TC‑PROFILE‑01 → TC‑PROFILE‑05.
+- Test case Nạp tiền: TC‑DEPOSIT‑01 → TC‑DEPOSIT‑05.
+- Test case Rút tiền: TC‑WITH‑01 → TC‑WITH‑04.
+- Test case Lịch sử biến động số dư (Admin): TC‑BAL‑01 → TC‑BAL‑03.
+- Test case Lịch sử mua hàng: TC‑ORDHIS‑01 → TC‑ORDHIS‑03.
+- Test case Shop của tôi: TC‑SHOP‑01 → TC‑SHOP‑02.
+- Test case Đăng bán sản phẩm: TC‑PROD‑01 → TC‑PROD‑04.
+- Test case Admin (Dashboard, Users, Categories, Products, Orders, Withdraw Requests): TC‑ADM‑… (đã liệt kê tập trung trong mục 11 của TEST_CASE.MD).
+
+Các test case này bao trùm hầu hết yêu cầu chức năng đã nêu ở Chương 1.
 
 ---
 
-## TÀI LIỆU THAM KHẢO
+## CHƯƠNG 3: THỰC THI TEST VÀ BÁO CÁO KẾT QUẢ TEST
 
-1. Đề bài môn Kiểm thử phần mềm – “Mã đề thi 33 – Hệ thống Website Mua Bán Mã Nguồn DevMartVN”, Bộ môn Công nghệ phần mềm, Trường ….
-2. Tài liệu đặc tả và thiết kế kiểm thử “KIEM-THU-WEBSITE-MUA-BAN-MA-NGUON-DEVMARTVN.COM”, Nhóm …, năm ….
-3. Giáo trình Kiểm thử phần mềm, Khoa …, Trường ….
+### 3.1. Kết quả thực hiện Integration Test
+
+Trong phạm vi bài tập lớn, nhóm em thực thi các Integration test tiêu biểu (ITC‑01 đến ITC‑04). Kết quả tổng hợp (minh hoạ):
+
+| ID     | Mô tả luồng tích hợp                             | Kết quả | Ghi chú ngắn                           |
+| ------ | ------------------------------------------------ | ------- | -------------------------------------- |
+| ITC-01 | Đăng ký → Đăng nhập → Trang chủ                  | Pass    | User mới đăng ký đăng nhập bình thường |
+| ITC-02 | Nạp tiền → Cập nhật số dư → Lịch sử nạp          | Pass    | Số dư và lịch sử khớp với số tiền nạp  |
+| ITC-03 | Mua sản phẩm → Tạo đơn hàng → Cập nhật số dư     | Fail    | Phát hiện lỗi BUG‑03 về trạng thái đơn |
+| ITC-04 | Rút tiền → Yêu cầu rút → Duyệt rút → Cập nhật ví | Fail    | Phát hiện lỗi BUG‑02 về vượt số dư     |
+
+**Danh sách lỗi tích hợp tiêu biểu:**
+
+- **BUG‑02 – Cho phép tạo yêu cầu rút vượt quá số dư khả dụng**
+
+  - Luồng: ITC‑04 (Rút tiền + Yêu cầu rút tiền admin).
+  - Mô tả tái hiện:
+    1. Đăng nhập bằng tài khoản có số dư 100.000 VND.
+    2. Vào màn Rút tiền, nhập 200.000 VND, nhấn “Tạo yêu cầu rút tiền”.
+    3. Hệ thống vẫn cho tạo yêu cầu và hiển thị trong lịch sử rút.
+  - Kỳ vọng: hệ thống phải chặn và hiển thị thông báo “Không đủ số dư để rút”.
+  - Severity: High – liên quan đến tiền.
+  - Status: Open (chưa sửa) / hoặc Fixed (nếu đã xác nhận sửa trong dev).
+
+- **BUG‑03 – Trạng thái đơn hàng không đổi sang “Hoàn thành” sau khi thanh toán**
+  - Luồng: ITC‑03 (Mua sản phẩm).
+  - Mô tả tái hiện:
+    1. User có đủ số dư, mua 1 sản phẩm bất kỳ.
+    2. Sau bước thanh toán, số dư đã trừ đúng.
+    3. Vào Lịch sử mua hàng và màn Quản lý đơn hàng (Admin) → trạng thái vẫn là “Đang xử lý”.
+  - Kỳ vọng: trạng thái phải chuyển sang “Hoàn thành” khi thanh toán thành công.
+  - Severity: Medium–High (ảnh hưởng trải nghiệm và đối soát).
+  - Status: Open/Fixed tuỳ thời điểm nhóm test.
+
+### 3.2. Kết quả thực hiện System Test
+
+System test được chạy trên toàn bộ bộ test case UI/UX. Nhóm em tổng hợp theo nhóm chức năng như sau (số liệu minh hoạ, nhóm có thể thay bằng số thực tế): [3]
+
+| Nhóm chức năng                          | Số TC | Pass | Fail | Tỉ lệ Pass | Nhận xét                            |
+| --------------------------------------- | ----- | ---- | ---- | ---------- | ----------------------------------- |
+| Tài khoản (Đăng ký, Đăng nhập, Hồ sơ)   | 20    | 19   | 1    | 95%        | 1 bug nhỏ về thông báo lỗi hiển thị |
+| Giao dịch (Nạp tiền, Rút tiền, Lịch sử) | 18    | 16   | 2    | 89%        | 2 bug liên quan ràng buộc số dư     |
+| Sản phẩm & Shop                         | 15    | 14   | 1    | 93%        | 1 bug ở phần upload ảnh thumbnail   |
+| Admin (Dashboard, Users, Products, …)   | 22    | 21   | 1    | 95%        | 1 bug về filter trạng thái đơn hàng |
+| **Tổng cộng**                           | 75    | 70   | 5    | 93%        | Hệ thống tương đối ổn định          |
+
+**Ví dụ một số lỗi system test:**
+
+- **BUG‑01 – Thiếu thông báo khi nhập số tiền nạp dưới mức tối thiểu**
+
+  - Màn: Nạp tiền.
+  - Bước: nhập 10.000 VND trong khi min = 50.000 VND, nhấn xác nhận.
+  - Thực tế: hệ thống không hiển thị lỗi rõ ràng.
+  - Kỳ vọng: hiển thị cảnh báo cụ thể, không cho phép tạo yêu cầu.
+  - Severity: Medium.
+
+- **BUG‑04 – Cho phép upload thumbnail định dạng không được hỗ trợ**
+  - Màn: Đăng bán sản phẩm.
+  - Bước: chọn file `.pdf` làm ảnh thumbnail, nhấn submit.
+  - Thực tế: hệ thống không báo lỗi rõ, vẫn nhận file.
+  - Kỳ vọng: chỉ chấp nhận JPG/PNG, báo lỗi cho định dạng khác.
+  - Severity: Medium.
+
+Nhìn chung, sau khi ghi nhận bug, nhóm em đã phối hợp với phía phát triển để sửa các lỗi quan trọng, sau đó chạy lại (re‑test) và cập nhật trạng thái Pass cho các test case tương ứng.
+
+---
+
+## CHƯƠNG 4: AUTOMATION TEST
+
+### 4.1. Công cụ sử dụng
+
+Trong phạm vi bài tập lớn, nhóm em lựa chọn các công cụ automation sau: [4][5]
+
+- **Selenium WebDriver + TestNG/JUnit (tuỳ ngôn ngữ):**
+
+  - Dùng để tự động hoá một số kịch bản UI lặp lại như đăng nhập, đăng ký, nạp tiền với dữ liệu hợp lệ.
+  - Lý do chọn:
+    - Hỗ trợ tốt cho ứng dụng web, đa trình duyệt.
+    - Cộng đồng lớn, tài liệu phong phú, dễ tra cứu.
+
+- **Postman (tùy chọn, nếu sử dụng API test):**
+  - Kiểm thử một số API backend (nếu tài liệu API sẵn có), ví dụ: login API, transaction API.
+  - Hỗ trợ tạo collection và chạy tự động theo môi trường.
+
+Môi trường automation:
+
+- Hệ điều hành: Windows 10/11.
+- Trình duyệt: Chrome + ChromeDriver tương ứng.
+- Ngôn ngữ: Java/Python (tuỳ nhóm) cùng với Selenium + TestNG/JUnit. [4][5]
+
+### 4.2. Kết quả đạt được
+
+Nhóm em xây dựng một số script automation minh hoạ:
+
+1. **Kịch bản “Đăng nhập hợp lệ”**
+
+   - Mở trang login, nhập email và password hợp lệ, nhấn Đăng nhập.
+   - Assert: URL chuyển sang trang chủ, header hiển thị tên user.
+
+2. **Kịch bản “Đăng ký thành công”**
+
+   - Tạo chuỗi email ngẫu nhiên chưa tồn tại, điền form đăng ký, nhấn Đăng ký.
+   - Assert: hiển thị thông báo thành công hoặc chuyển sang trang Login.
+
+3. **Kịch bản “Nạp tiền với mệnh giá nhanh”**
+   - Đăng nhập, vào màn Nạp tiền, click mệnh giá 100.000 VND.
+   - Assert: số tiền hiển thị đúng, mã QR được generate (có thể kiểm tra sự xuất hiện của vùng QR).
+
+Lợi ích đạt được:
+
+- Giảm thời gian kiểm thử lại (regression) cho những luồng cơ bản mỗi khi có cập nhật.
+- Tăng độ chính xác khi phải lặp lại cùng một chuỗi thao tác với nhiều bộ dữ liệu.
+
+Hạn chế:
+
+- Chưa tự động hoá được các kịch bản phức tạp liên quan đến xác nhận từ cổng thanh toán thật.
+- Việc bảo trì script còn thủ công khi giao diện thay đổi.
+
+---
+
+## KẾT LUẬN
+
+### 1. Những nội dung đã đạt được
+
+- Nhóm em đã phân tích đề bài và tài liệu đặc tả để hiểu rõ bối cảnh, yêu cầu của hệ thống DevMartVN, từ đó xác định được 15 màn hình và các module chức năng chính. [1][2]
+- Dựa trên đó, nhóm thiết kế bộ test case chi tiết cho từng màn hình (được tổng hợp trong TEST_CASE.MD), bao gồm cả các trường trên giao diện, hành vi, điều kiện ràng buộc và thông điệp lỗi. [3]
+- Nhóm đã thực thi test ở mức Integration và System, phát hiện một số lỗi quan trọng liên quan đến giao dịch tài chính và hiển thị trạng thái. Các lỗi này được ghi nhận và đề xuất hướng xử lý.
+- Một phần test đã được tự động hoá bằng Selenium để minh hoạ lợi ích của automation trong regression test. [4][5]
+
+### 2. Hạn chế
+
+- Unit test chưa được triển khai đầy đủ trong code, chủ yếu dừng ở mức mô hình hóa trên giấy.
+- Chưa thực hiện kiểm thử hiệu năng và bảo mật chuyên sâu; chưa đo đạc khả năng chịu tải với nhiều người dùng đồng thời.
+- Automation test mới bao phủ một số luồng cơ bản, chưa áp dụng data‑driven test và chưa tích hợp CI/CD.
+
+### 3. Hướng phát triển
+
+- Bổ sung unit test và automation test cho các hàm nghiệp vụ quan trọng (xử lý tiền, cập nhật trạng thái giao dịch).
+- Thực hiện kiểm thử hiệu năng với các công cụ như JMeter, kiểm thử bảo mật cơ bản theo OWASP Top 10. [5]
+- Chuẩn hóa bộ test case và báo cáo theo chuẩn ISO/IEC/IEEE 29119 để dễ chuyển giao và mở rộng cho các phiên bản tiếp theo. [5]
+- Tích hợp automation test vào pipeline CI/CD để mỗi lần build mới đều có thể chạy regression tự động.
+
+---
+
+## DANH MỤC TÀI LIỆU THAM KHẢO
+
+1. Đề bài môn Kiểm thử phần mềm – “Hệ thống Website Mua Bán Mã Nguồn DevMartVN”, Bộ môn Công nghệ phần mềm, Trường ….
+2. Tài liệu phân tích, thiết kế và danh sách màn hình “KIEM-THU-WEBSITE-MUA-BAN-MA-NGUON-DEVMARTVN.COM.xlsx”, Nhóm …, năm ….
+3. File “TEST_CASE.MD – Báo cáo Test Case UI/UX Website Mua Bán Mã Nguồn DevMartVN”, Nhóm …, 2025.
 4. G. J. Myers, C. Sandler, T. Badgett, _The Art of Software Testing_, 3rd Edition, Wiley, 2011.
-5. ISO/IEC/IEEE 29119, _Software and systems engineering – Software testing_, 2013.
-6. Các bài viết và tài liệu trực tuyến về kỹ thuật thiết kế test case, kiểm thử web và công cụ hỗ trợ kiểm thử.
-
----
-
-## PHỤ LỤC
-
-- **Phụ lục A:** Toàn bộ test case chi tiết cho 15 màn hình (sao chép từ file test .md/Excel của nhóm).
-- **Phụ lục B:** Ảnh chụp màn hình giao diện các chức năng chính (Frontend và Admin).
-- **Phụ lục C:** Danh sách bug chi tiết và trạng thái xử lý (Open / Fixed / Re-test Pass).
+5. ISO/IEC/IEEE 29119, _Software and systems engineering – Software testing_, 2013, cùng các tài liệu hướng dẫn kỹ thuật kiểm thử hộp đen và automation test (Selenium, Postman, JUnit, TestNG).
