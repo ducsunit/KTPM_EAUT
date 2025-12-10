@@ -67,17 +67,17 @@
 
 ## 3. Trang chủ (Trang-chu.jpg)
 
-### 3.1. Block chính
+### 3.1. Định nghĩa hạng mục màn hình
 
-| STT | Block / Field          | Mô tả                                                  |
-| --- | ---------------------- | ------------------------------------------------------ |
-| 1   | Header                 | Logo, thanh tìm kiếm, menu danh mục, Đăng bán, Login   |
-| 2   | Banner quảng cáo       | Banner chính khuyến mãi                                |
-| 3   | Danh mục top menu      | Tất cả, Website, Game/Giải trí, Hệ thống Quản lý,...   |
-| 4   | Khối “Top lượt xem”    | Danh sách sản phẩm xem nhiều (sidebar trái)            |
-| 5   | Khối “Ưu đãi đặc biệt” | CTA đăng ký / đăng nhập nhanh                          |
-| 6   | Danh sách sản phẩm     | Card sản phẩm: ảnh, tên, giá, badge miễn phí, thống kê |
-| 7   | Footer                 | Thông tin DevMartVN, hỗ trợ, liên hệ, social           |
+| No. | Tên hạng mục màn hình  | Mô tả                                                  | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                          |
+| --- | ---------------------- | ------------------------------------------------------ | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------ | --------------- | --------------------------------------------- |
+| 1   | Header                 | Logo, thanh tìm kiếm, menu danh mục, Đăng bán, Login   | Object    | O   | -        | -            | -          | -          | Object       | -               | Fixed top, z-index 30, gradient background    |
+| 2   | Banner quảng cáo       | Banner chính khuyến mãi (Swiper slider)                | Image     | O   | -        | -            | -          | -          | String (URL) | slide1.jpg      | Swiper slider tự động, delay 3000ms, 3 slides |
+| 3   | Danh mục top menu      | Tất cả, Website, Game/Giải trí, Hệ thống Quản lý,...   | Button    | O   | -        | -            | -          | -          | String       | "all"           | Horizontal menu, click filter sản phẩm        |
+| 4   | Khối "Top lượt xem"    | Danh sách sản phẩm xem nhiều (sidebar trái)            | Object    | O   | -        | -            | -          | -          | Array        | []              | Hiển thị trong Sidebar component              |
+| 5   | Khối "Ưu đãi đặc biệt" | CTA đăng ký / đăng nhập nhanh                          | Object    | O   | -        | -            | -          | -          | Object       | -               | Promotional banner trong Sidebar              |
+| 6   | Danh sách sản phẩm     | Card sản phẩm: ảnh, tên, giá, badge miễn phí, thống kê | Object    | O   | -        | -            | -          | -          | Array        | []              | Grid layout responsive, CodeCard component    |
+| 7   | Footer                 | Thông tin DevMartVN, hỗ trợ, liên hệ, social           | Object    | O   | -        | -            | -          | -          | Object       | -               | Fixed bottom, links và social icons           |
 
 ### 3.2. Test case chính
 
@@ -94,18 +94,20 @@
 
 ## 4. Thông tin cá nhân + Thông tin ngân hàng (Thong-tin-ca-nhan.jpg)
 
-### 4.1. Field
+### 4.1. Định nghĩa hạng mục màn hình
 
-| STT | Field               | Control            | I/O | Req | Ghi chú                |
-| --- | ------------------- | ------------------ | --- | --- | ---------------------- |
-| 1   | Họ và tên           | Textbox            | I   | Y   | Thông tin tài khoản    |
-| 2   | Tên đăng nhập       | Textbox (readonly) | O   | Y   | Không cho sửa          |
-| 3   | Email               | Textbox (readonly) | O   | Y   |                        |
-| 4   | Số điện thoại       | Textbox            | I   | Y   |                        |
-| 5   | Ngân hàng nhận tiền | Select             | I   | Y   | Danh sách ngân hàng VN |
-| 6   | Số tài khoản        | Textbox            | I   | Y   | Chỉ số, max 20         |
-| 7   | Chủ tài khoản       | Textbox            | I   | Y   |                        |
-| 8   | Lưu thay đổi        | Button             | I   | Y   | Cập nhật thông tin     |
+| No. | Tên hạng mục màn hình | Mô tả                                     | Định dạng | I/O | Bắt buộc | Place Holder                  | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                   |
+| --- | --------------------- | ----------------------------------------- | --------- | --- | -------- | ----------------------------- | ---------- | ---------- | ------------ | --------------- | ---------------------------------------------------------------------- |
+| 1   | Avatar người dùng     | Hiển thị ảnh đại diện, có nút upload      | Image     | O   | -        | -                             | -          | -          | String (URL) | defaultAvatar   | 24x24 rounded-3xl, có nút camera để upload, max 5MB, accept image/\*   |
+| 2   | Họ và tên             | Textbox để nhập họ và tên đầy đủ          | Textbox   | I   | Y        | -                             | 1          | 255        | String       | ""              | Required, trim() khi submit                                            |
+| 3   | Tên đăng nhập         | Textbox hiển thị tên đăng nhập (readonly) | Textbox   | O   | Y        | -                             | -          | -          | String       | ""              | Disabled, bg-gray-50, cursor-not-allowed, không cho sửa                |
+| 4   | Email                 | Textbox để nhập email                     | Textbox   | I   | Y        | -                             | 1          | 255        | Email        | ""              | Required, validate email format                                        |
+| 5   | Số điện thoại         | Textbox để nhập số điện thoại             | Textbox   | I   | Y        | -                             | 9          | 12         | String       | ""              | Required, chỉ nhận số, format VN                                       |
+| 6   | Ngân hàng nhận tiền   | Select dropdown danh sách ngân hàng VN    | Select    | I   | Y        | "— Chọn ngân hàng —"          | -          | -          | String       | ""              | Required, load từ API, format: "ShortName - FullName"                  |
+| 7   | Số tài khoản          | Textbox để nhập số tài khoản ngân hàng    | Textbox   | I   | Y        | "Nhập chính xác số tài khoản" | 1          | 20         | String       | ""              | Required, chỉ số, max 20 ký tự                                         |
+| 8   | Chủ tài khoản         | Textbox để nhập tên chủ tài khoản         | Textbox   | I   | Y        | "Viết IN HOA có dấu"          | 1          | 255        | String       | ""              | Required, viết IN HOA có dấu                                           |
+| 9   | Nút "Lưu thay đổi"    | Button submit form cập nhật thông tin     | Button    | I   | Y        | -                             | -          | -          | Boolean      | false           | Disabled khi loading, màu brand-500, hiển thị "Đang lưu..." khi saving |
+| 10  | Nút "Đổi mật khẩu"    | Button điều hướng sang trang đổi mật khẩu | Button    | I   | N        | -                             | -          | -          | -            | -               | Màu gray-900, điều hướng tới /profile/change-password                  |
 
 ### 4.2. Test case
 
@@ -121,16 +123,17 @@
 
 ## 5. Nạp tiền (Nap-tien.jpg / Nap-Tien.jpg)
 
-### 5.1. Field
+### 5.1. Định nghĩa hạng mục màn hình
 
-| STT | Field                          | Control | I/O | Req | Ghi chú                                   |
-| --- | ------------------------------ | ------- | --- | --- | ----------------------------------------- |
-| 1   | Số dư hiện tại                 | Label   | O   | -   | Hiển thị số dư                            |
-| 2   | Các mệnh giá nhanh             | Button  | I   | N   | 50k, 100k, 200k, 500k, 1M, 2M             |
-| 3   | Nhập số tiền khác              | Textbox | I   | N   | Nhập VND, có min/max                      |
-| 4   | QR VietQR                      | Image   | O   | -   | Mã QR theo số tiền và nội dung            |
-| 5   | Nút “Xác nhận đã chuyển khoản” | Button  | I   | Y   | Xác nhận đã thanh toán                    |
-| 6   | Lịch sử nạp tiền               | Table   | O   | -   | Thời gian, số tiền, số dư sau, trạng thái |
+| No. | Tên hạng mục màn hình          | Mô tả                                                            | Định dạng | I/O | Bắt buộc | Place Holder               | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                                                                                  |
+| --- | ------------------------------ | ---------------------------------------------------------------- | --------- | --- | -------- | -------------------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Số dư hiện tại                 | Hiển thị số dư của người dùng                                    | Label     | O   | -        | -                          | -          | -          | Number       | 0               | Format VND, hiển thị trong header hoặc card                                                                                           |
+| 2   | Các mệnh giá nhanh             | Các nút chọn nhanh số tiền để nạp                                | Button    | I   | N        | -                          | -          | -          | Number       | 100000          | Grid 3 cột, giá trị: 50000, 100000, 200000, 500000, 1000000, 2000000                                                                  |
+| 3   | Nhập số tiền khác              | Textbox để nhập số tiền tùy chỉnh                                | Textbox   | I   | N        | "Nhập số tiền muốn nạp..." | -          | -          | Number       | ""              | Chỉ nhận số, min: 50000, tự động format khi nhập                                                                                      |
+| 4   | QR VietQR                      | Mã QR theo số tiền và nội dung chuyển khoản                      | Image     | O   | -        | -                          | -          | -          | String (URL) | -               | Tự động cập nhật theo số tiền, URL: https://img.vietqr.io/image/ACB-17059951-compact2.png                                             |
+| 5   | Nội dung chuyển khoản          | Hiển thị nội dung chuyển khoản cần nhập                          | Label     | O   | -        | -                          | -          | 255        | String       | -               | Format: "naptien {username} {amount}", có nút sao chép                                                                                |
+| 6   | Nút "Xác nhận đã chuyển khoản" | Xác nhận đã thanh toán                                           | Button    | I   | Y        | -                          | -          | -          | Boolean      | false           | Disabled nếu chưa login, hiển thị loading khi đang kiểm tra                                                                           |
+| 7   | Lịch sử nạp tiền               | Bảng hiển thị lịch sử: Thời gian, số tiền, số dư sau, trạng thái | Table     | O   | -        | -                          | -          | -          | Array        | []              | Chỉ hiển thị DEPOSIT, có nút refresh, format: Thời gian (dd/mm/yyyy HH:mm), Số tiền (+format VND), Số dư sau, Trạng thái (Thành công) |
 
 ### 5.2. Test case
 
@@ -146,15 +149,16 @@
 
 ## 6. Rút tiền (Rut-tien.jpg)
 
-### 6.1. Field
+### 6.1. Định nghĩa hạng mục màn hình
 
-| STT | Field            | Control | I/O | Req | Ghi chú                                    |
-| --- | ---------------- | ------- | --- | --- | ------------------------------------------ |
-| 1   | Số dư khả dụng   | Label   | O   | -   |                                            |
-| 2   | Các mệnh giá     | Button  | I   | N   | 50k, 100k, 200k, 500k, 1M, 2M              |
-| 3   | Nhập số tiền rút | Textbox | I   | Y   | >= min, <= số dư                           |
-| 4   | Tạo yêu cầu rút  | Button  | I   | Y   |                                            |
-| 5   | Lịch sử rút tiền | Table   | O   | -   | Mã giao dịch, số tiền, trạng thái, ghi chú |
+| No. | Tên hạng mục màn hình              | Mô tả                                                                        | Định dạng | I/O | Bắt buộc | Place Holder            | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                                                                                |
+| --- | ---------------------------------- | ---------------------------------------------------------------------------- | --------- | --- | -------- | ----------------------- | ---------- | ---------- | ------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Số dư khả dụng                     | Hiển thị số dư hiện tại của người dùng                                       | Label     | O   | -        | -                       | -          | -          | Number       | 0               | Format VND, hiển thị trong card hoặc header                                                                                         |
+| 2   | Các mệnh giá nhanh                 | Các nút chọn nhanh số tiền để rút                                            | Button    | I   | N        | -                       | -          | -          | Number       | 100000          | Grid 3 cột, giá trị: 50000, 100000, 200000, 500000, 1000000, 2000000                                                                |
+| 3   | Nhập số tiền rút                   | Textbox để nhập số tiền rút tùy chỉnh                                        | Textbox   | I   | Y        | "Nhập số tiền muốn rút" | -          | -          | Number       | ""              | Chỉ nhận số, min: 50000, max: số dư hiện tại                                                                                        |
+| 4   | Nút "Tạo yêu cầu rút tiền"         | Button submit tạo yêu cầu rút tiền                                           | Button    | I   | Y        | -                       | -          | -          | Boolean      | false           | Disabled nếu chưa login hoặc thiếu thông tin ngân hàng, hiển thị "Đang xử lý..." khi submitting                                     |
+| 5   | Lịch sử rút tiền                   | Bảng hiển thị lịch sử: Mã giao dịch, số tiền, trạng thái, ghi chú, thời gian | Table     | O   | -        | -                       | -          | -          | Array        | []              | Format: Mã (DMVN{id}), Số tiền (-format VND, màu đỏ), Trạng thái (PENDING/APPROVED/REJECTED), Ghi chú, Thời gian (dd/mm/yyyy HH:mm) |
+| 6   | Cảnh báo thiếu thông tin ngân hàng | Hiển thị cảnh báo nếu chưa cập nhật thông tin ngân hàng                      | Label     | O   | -        | -                       | -          | -          | Boolean      | false           | Màu vàng, có link điều hướng tới /profile                                                                                           |
 
 ### 6.2. Test case
 
@@ -169,17 +173,17 @@
 
 ## 7. Lịch sử biến động số dư (Lich-su-bien-dong-so-du.jpg – Admin)
 
-### 7.1. Field
+### 7.1. Định nghĩa hạng mục màn hình
 
-| STT | Field / Cột | Mô tả                                                     |
-| --- | ----------- | --------------------------------------------------------- |
-| 1   | Tabs filter | Tất cả, Nạp tiền, Rút tiền, Mua hàng, Bán hàng, Hoàn tiền |
-| 2   | Người dùng  | Avatar + tên                                              |
-| 3   | Số tiền     | Có dấu + / –, màu xanh/đỏ                                 |
-| 4   | Số dư sau   | Balance sau giao dịch                                     |
-| 5   | Nội dung    | Mô tả giao dịch                                           |
-| 6   | Thời gian   | Ngày giờ                                                  |
-| 7   | Pagination  | Chuyển trang                                              |
+| No. | Tên hạng mục màn hình | Mô tả                                 | Định dạng  | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                     |
+| --- | --------------------- | ------------------------------------- | ---------- | --- | -------- | ------------ | ---------- | ---------- | ------------ | --------------- | ------------------------------------------------------------------------ |
+| 1   | Tabs filter           | Các tab lọc theo loại giao dịch       | Tabs       | I   | N        | -            | -          | -          | String       | "Tất cả"        | Tabs: Tất cả, Nạp tiền, Rút tiền, Mua hàng, Bán hàng, Hoàn tiền          |
+| 2   | Người dùng            | Hiển thị avatar và tên người dùng     | Object     | O   | -        | -            | -          | -          | Object       | -               | Avatar: rounded-full, fallback: chữ cái đầu, tên: username hoặc fullName |
+| 3   | Số tiền               | Hiển thị số tiền với dấu + / – và màu | Label      | O   | -        | -            | -          | -          | Number       | 0               | Giao dịch cộng: màu xanh, dấu +; trừ: màu đỏ, dấu –, format VND          |
+| 4   | Số dư sau             | Hiển thị số dư sau giao dịch          | Label      | O   | -        | -            | -          | -          | Number       | 0               | Format VND, màu gray                                                     |
+| 5   | Nội dung              | Mô tả giao dịch                       | Label      | O   | -        | -            | -          | 500        | String       | -               | Mô tả ngắn gọn về loại giao dịch                                         |
+| 6   | Thời gian             | Hiển thị ngày giờ giao dịch           | Label      | O   | -        | -            | -          | -          | Date         | -               | Format dd/mm/yyyy HH:mm                                                  |
+| 7   | Pagination            | Phân trang danh sách giao dịch        | Pagination | I   | N        | -            | -          | -          | Number       | 1               | Hiển thị số trang, nút Previous/Next, số items per page                  |
 
 ### 7.2. Test case
 
@@ -193,16 +197,17 @@
 
 ## 8. Lịch sử mua hàng (Lich-su-mua-hang.jpg – User)
 
-### 8.1. Field
+### 8.1. Định nghĩa hạng mục màn hình
 
-| STT | Field        | Mô tả                   |
-| --- | ------------ | ----------------------- |
-| 1   | Mã giao dịch | Ví dụ: #7, #5…          |
-| 2   | Tên sản phẩm | Link tới trang chi tiết |
-| 3   | Thời gian    | Ngày giờ mua            |
-| 4   | Giá          | Giá VND                 |
-| 5   | Xem chi tiết | Button                  |
-| 6   | Tải xuống    | Button                  |
+| No. | Tên hạng mục màn hình   | Mô tả                                      | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                                   |
+| --- | ----------------------- | ------------------------------------------ | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------ | --------------- | -------------------------------------------------------------------------------------- |
+| 1   | Mã giao dịch            | Hiển thị mã đơn hàng                       | Label     | O   | -        | -            | -          | -          | Number       | -               | Format: #{orderId}, font-mono                                                          |
+| 2   | Tên sản phẩm            | Hiển thị tên sản phẩm đã mua               | Label     | O   | -        | -            | 1          | 255        | String       | -               | Có thể click để xem chi tiết, font-semibold                                            |
+| 3   | Thời gian               | Hiển thị ngày giờ mua hàng                 | Label     | O   | -        | -            | -          | -          | Date         | -               | Format: dd/mm/yyyy HH:mm, màu gray-500                                                 |
+| 4   | Giá                     | Hiển thị giá đã thanh toán                 | Label     | O   | -        | -            | -          | -          | Number       | 0               | Format VND, màu gray-500                                                               |
+| 5   | Nút "Xem chi tiết"      | Button mở modal chi tiết đơn hàng          | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Màu gray, border, mở modal hiển thị thông tin chi tiết                                 |
+| 6   | Nút "Tải xuống"         | Button tải file mã nguồn                   | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Màu brand-500, mở link download trong tab mới                                          |
+| 7   | Modal chi tiết đơn hàng | Modal hiển thị thông tin chi tiết đơn hàng | Modal     | O   | -        | -            | -          | -          | Object       | null            | Hiển thị: Sản phẩm, Giá mua, Ngày mua, Người bán, Mô tả ngắn, có nút Tải xuống và Đóng |
 
 ### 8.2. Test case
 
@@ -216,14 +221,20 @@
 
 ## 9. Shop của tôi (Shop-cua-toi.jpg – Seller)
 
-### 9.1. Field
+### 9.1. Định nghĩa hạng mục màn hình
 
-| STT | Field/Block        | Mô tả                            |
-| --- | ------------------ | -------------------------------- |
-| 1   | Thông tin seller   | Avatar, tên, ngày tham gia       |
-| 2   | Danh sách sản phẩm | Card sản phẩm đã đăng của seller |
-| 3   | Nút Theo dõi       | Button                           |
-| 4   | Nút Nhắn tin       | Button (nếu có)                  |
+| No. | Tên hạng mục màn hình     | Mô tả                                          | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                             |
+| --- | ------------------------- | ---------------------------------------------- | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------ | --------------- | -------------------------------------------------------------------------------- |
+| 1   | Avatar seller             | Hiển thị ảnh đại diện người bán                | Image     | O   | -        | -            | -          | -          | String (URL) | defaultAvatar   | 24x24 rounded-3xl, fallback: defaultAvatar                                       |
+| 2   | Tên seller                | Hiển thị tên người bán                         | Label     | O   | -        | -            | 1          | 255        | String       | -               | Font size: text-3xl, bold, màu gray-900                                          |
+| 3   | Username                  | Hiển thị username người bán                    | Label     | O   | -        | -            | 1          | 255        | String       | -               | Font size: text-sm, màu gray-500                                                 |
+| 4   | Ngày tham gia             | Hiển thị ngày tham gia                         | Label     | O   | -        | -            | -          | -          | Date         | -               | Format: "Tham gia từ dd/mm/yyyy", màu gray-500                                   |
+| 5   | Nút "Liên hệ"             | Button hiển thị thông tin liên hệ              | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Màu brand-500, mở modal hiển thị: Tên, Email, Số điện thoại                      |
+| 6   | Nút "Theo dõi"            | Button theo dõi người bán                      | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Border gray-200, hiển thị thông báo "Chức năng đang phát triển"                  |
+| 7   | Danh sách sản phẩm        | Grid hiển thị các sản phẩm của seller          | Grid      | O   | -        | -            | -          | -          | Array        | []              | Grid 3 cột (desktop), 2 cột (tablet), 1 cột (mobile), sử dụng CodeCard component |
+| 8   | Badge trạng thái sản phẩm | Hiển thị trạng thái sản phẩm (nếu là chủ shop) | Badge     | O   | -        | -            | -          | -          | String       | -               | APPROVED: xanh, PENDING: vàng, REJECTED: đỏ, hiển thị ở góc trên trái card       |
+| 9   | Nút "Chỉnh sửa"           | Button chỉnh sửa sản phẩm (nếu là chủ shop)    | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Icon edit, màu blue-600, điều hướng tới /products/edit/{id}                      |
+| 10  | Nút "Xóa"                 | Button xóa sản phẩm (nếu là chủ shop)          | Button    | I   | N        | -            | -          | -          | Boolean      | false           | Icon delete, màu red-600, có confirm dialog trước khi xóa                        |
 
 ### 9.2. Test case
 
@@ -236,18 +247,19 @@
 
 ## 10. Đăng bán sản phẩm (Dang-ban-san-pham.jpg)
 
-### 10.1. Field
+### 10.1. Định nghĩa hạng mục màn hình
 
-| STT | Field             | Control | Req | Ghi chú                                      |
-| --- | ----------------- | ------- | --- | -------------------------------------------- |
-| 1   | Tên sản phẩm      | Textbox | Y   |                                              |
-| 2   | Danh mục          | Select  | Y   | Danh mục hệ thống quản lý, Website, Game,... |
-| 3   | Giá bán           | Textbox | N   | Nếu rỗng hoặc 0 → sản phẩm miễn phí          |
-| 4   | Mô tả chi tiết    | Editor  | Y   | Nội dung có thể rich text                    |
-| 5   | Link tải nguồn    | Textbox | Y   | URL hoặc đường dẫn                           |
-| 6   | Link demo         | Textbox | N   | URL demo                                     |
-| 7   | Ảnh thumbnail     | Upload  | Y   | JPG/PNG, min kích thước, max dung lượng      |
-| 8   | Gửi yêu cầu duyệt | Button  | Y   | Tạo request chờ admin duyệt                  |
+| No. | Tên hạng mục màn hình   | Mô tả                              | Định dạng | I/O | Bắt buộc | Place Holder                                         | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                                                                              |
+| --- | ----------------------- | ---------------------------------- | --------- | --- | -------- | ---------------------------------------------------- | ---------- | ---------- | ------------- | --------------- | --------------------------------------------------------------------------------- |
+| 1   | Tên sản phẩm            | Textbox để nhập tên sản phẩm       | Textbox   | I   | Y        | "VD: Website bán hàng thương mại điện tử Full Stack" | 1          | 255        | String        | ""              | Required, trim() khi submit                                                       |
+| 2   | Danh mục                | Select dropdown danh sách danh mục | Select    | I   | Y        | "-- Chọn danh mục --"                                | -          | -          | Number        | ""              | Required, load từ API, options: Website, Game, Mobile, Desktop, Plugin, API, etc. |
+| 3   | Giá bán                 | Textbox để nhập giá bán (VNĐ)      | Textbox   | I   | Y        | "500000"                                             | -          | -          | Number        | ""              | Required, type="number", min="0", step="1000", nếu = 0 hoặc rỗng → miễn phí       |
+| 4   | Mô tả chi tiết          | Rich text editor (CKEditor)        | Editor    | I   | Y        | -                                                    | -          | -          | String (HTML) | ""              | Required, CKEditor với toolbar đầy đủ, minHeight: 500px, hỗ trợ upload image      |
+| 5   | Link file mã nguồn      | Textbox để nhập URL file mã nguồn  | Textbox   | I   | N        | "https://drive.google.com/..."                       | -          | 500        | String (URL)  | ""              | Type="url", có thể là Google Drive, Dropbox hoặc link tải trực tiếp               |
+| 6   | Link demo               | Textbox để nhập URL demo           | Textbox   | I   | N        | "https://demo.example.com"                           | -          | 500        | String (URL)  | ""              | Type="url", mở trong tab mới                                                      |
+| 7   | Ảnh thumbnail           | Upload file ảnh thumbnail          | Upload    | I   | Y        | -                                                    | -          | -          | File          | null            | Accept="image/\*", max size: 10MB, format: JPG/PNG/GIF/WEBP, có preview           |
+| 8   | Nút "Gửi yêu cầu duyệt" | Button submit form đăng sản phẩm   | Button    | I   | Y        | -                                                    | -          | -          | Boolean       | false           | Disabled khi loading, màu brand-500, hiển thị "Đang xử lý..." khi loading         |
+| 9   | Nút "Xóa thông tin"     | Button reset form                  | Button    | I   | N        | -                                                    | -          | -          | Boolean       | false           | Border gray-300, reset tất cả field về giá trị default                            |
 
 ### 10.2. Test case
 
@@ -264,14 +276,22 @@
 
 Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-danh-muc.jpg, Quan-ly-san-pham.jpg, Quan-ly-don-hang.jpg, Yeu-cau-rut-tien.jpg) dùng chung cấu trúc:
 
-### 11.1. Trường cơ bản của mỗi màn
+### 11.1. Định nghĩa hạng mục màn hình
 
-| Trường chung   | Mô tả                                                      |
-| -------------- | ---------------------------------------------------------- |
-| Thanh sidebar  | Menu: Thống kê, Quản lý người dùng, Quản lý sản phẩm, ...  |
-| Ô tìm kiếm     | Search theo tên/email/sản phẩm/mã đơn tùy màn              |
-| Bảng danh sách | ID, thông tin chính, trạng thái, thao tác                  |
-| Thao tác       | Sửa, Xóa, Chi tiết, Duyệt / Từ chối (với yêu cầu rút tiền) |
+| No. | Tên hạng mục màn hình   | Mô tả                                            | Định dạng  | I/O | Bắt buộc | Place Holder  | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                                                                                      |
+| --- | ----------------------- | ------------------------------------------------ | ---------- | --- | -------- | ------------- | ---------- | ---------- | ------------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Thanh sidebar           | Menu điều hướng các màn hình admin               | Sidebar    | O   | -        | -             | -          | -          | Object       | -               | Menu: Thống kê, Quản lý người dùng, Quản lý sản phẩm, Quản lý danh mục, Quản lý đơn hàng, Yêu cầu rút tiền, Lịch sử giao dịch, Audit logs |
+| 2   | Ô tìm kiếm              | Textbox tìm kiếm theo từ khóa                    | Textbox    | I   | N        | "Tìm kiếm..." | 1          | 255        | String       | ""              | Search theo tên/email/sản phẩm/mã đơn tùy màn, có nút search hoặc Enter để submit                                                         |
+| 3   | Bảng danh sách          | Bảng hiển thị danh sách dữ liệu                  | Table      | O   | -        | -             | -          | -          | Array        | []              | Cột: ID, thông tin chính, trạng thái, thao tác, có sorting và filtering                                                                   |
+| 4   | Cột ID                  | Hiển thị ID của record                           | Label      | O   | -        | -             | -          | -          | Number       | -               | Font-mono, có thể click để xem chi tiết                                                                                                   |
+| 5   | Cột thông tin chính     | Hiển thị thông tin chính (tên, email, etc.)      | Label      | O   | -        | -             | 1          | 255        | String       | -               | Tùy màn hình: tên user, tên sản phẩm, tên danh mục, etc.                                                                                  |
+| 6   | Cột trạng thái          | Hiển thị trạng thái với badge màu                | Badge      | O   | -        | -             | -          | -          | String       | -               | Màu sắc tùy trạng thái: APPROVED (xanh), PENDING (vàng), REJECTED (đỏ), ACTIVE (xanh), INACTIVE (xám)                                     |
+| 7   | Nút "Sửa"               | Button chỉnh sửa record                          | Button     | I   | N        | -             | -          | -          | Boolean      | false           | Icon edit, màu blue, điều hướng tới trang edit                                                                                            |
+| 8   | Nút "Xóa"               | Button xóa record                                | Button     | I   | N        | -             | -          | -          | Boolean      | false           | Icon delete, màu red, có confirm dialog trước khi xóa                                                                                     |
+| 9   | Nút "Chi tiết"          | Button xem chi tiết record                       | Button     | I   | N        | -             | -          | -          | Boolean      | false           | Màu gray, mở modal hoặc điều hướng tới trang chi tiết                                                                                     |
+| 10  | Nút "Duyệt" / "Từ chối" | Button duyệt hoặc từ chối (với yêu cầu rút tiền) | Button     | I   | N        | -             | -          | -          | Boolean      | false           | Duyệt: màu green, Từ chối: màu red, có confirm dialog                                                                                     |
+| 11  | Pagination              | Phân trang danh sách                             | Pagination | I   | N        | -             | -          | -          | Number       | 1               | Hiển thị số trang, nút Previous/Next, số items per page (10, 20, 50, 100)                                                                 |
+| 12  | Tabs filter             | Tabs lọc theo trạng thái (với quản lý sản phẩm)  | Tabs       | I   | N        | -             | -          | -          | String       | "Tất cả"        | Tabs: Tất cả, Chờ duyệt, Đã duyệt, Từ chối                                                                                                |
 
 ### 11.2. Một số test case mẫu
 
