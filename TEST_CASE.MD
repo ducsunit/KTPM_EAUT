@@ -8,18 +8,18 @@
 
 ## 1. Đăng nhập (dangnhap.jpg)
 
-### 1.1. Field trên màn hình
+### 1.1. Định nghĩa hạng mục màn hình
 
-| STT | Field                    | Control  | I/O | Req | Kiểu dữ liệu | Min | Max | Ghi chú                           |
-| --- | ------------------------ | -------- | --- | --- | ------------ | --- | --- | --------------------------------- |
-| 1   | Email hoặc tên đăng nhập | Textbox  | I   | Y   | String/Email | 1   | 255 | Placeholder: email hoặc username  |
-| 2   | Mật khẩu                 | Password | I   | Y   | String       | 8   | 128 | Ẩn ký tự nhập                     |
-| 3   | Ghi nhớ đăng nhập        | Checkbox | I   | N   | Boolean      | -   | -   | Giữ trạng thái đăng nhập          |
-| 4   | Đăng nhập                | Button   | I   | Y   | -            | -   | -   | Submit form                       |
-| 5   | Quên mật khẩu            | Link     | I   | N   | -            | -   | -   | Điều hướng sang màn quên mật khẩu |
-| 6   | Đăng nhập Google         | Button   | I   | N   | -            | -   | -   | Social login Google               |
-| 7   | Đăng nhập GitHub         | Button   | I   | N   | -            | -   | -   | Social login GitHub               |
-| 8   | Đăng ký ngay             | Link     | I   | N   | -            | -   | -   | Điều hướng sang màn Đăng ký       |
+| No. | Tên hạng mục màn hình  | Mô tả                                        | Định dạng | I/O | Bắt buộc | Place Holder    | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                      |
+| --- | ---------------------- | -------------------------------------------- | --------- | --- | -------- | --------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------------------------------------------- |
+| 1   | Tên đăng nhập          | Textbox để nhập tên đăng nhập hoặc email     | Textbox   | I   | Y        | "devmartvn"     | 1          | 255        | String       | ""              | Icon: fa-envelope, required, trim() khi submit                            |
+| 2   | Mật khẩu               | Textbox để nhập mật khẩu, có nút hiển thị/ẩn | Password  | I   | Y        | "Nhập mật khẩu" | 8          | 128        | String       | ""              | Icon: fa-lock, có nút toggle show/hide password, required                 |
+| 3   | Ghi nhớ đăng nhập      | Checkbox để ghi nhớ trạng thái đăng nhập     | Checkbox  | I   | N        | -               | -          | -          | Boolean      | false           | Lưu vào localStorage nếu checked                                          |
+| 4   | Nút "Đăng nhập"        | Button submit form đăng nhập                 | Button    | I   | Y        | -               | -          | -          | -            | -               | Disabled khi loading, màu brand-500, hiển thị "Đang xử lý..." khi loading |
+| 5   | Link "Quên mật khẩu?"  | Link điều hướng sang màn quên mật khẩu       | Link      | I   | N        | -               | -          | -          | -            | -               | Màu brand-500, hover underline                                            |
+| 6   | Nút "Đăng nhập Google" | Button đăng nhập bằng Google OAuth           | Button    | I   | N        | -               | -          | -          | -            | -               | Icon: fab fa-google, màu đỏ, border gray-200                              |
+| 7   | Nút "Đăng nhập GitHub" | Button đăng nhập bằng GitHub OAuth           | Button    | I   | N        | -               | -          | -          | -            | -               | Icon: fab fa-github, màu đen, border gray-200                             |
+| 8   | Link "Đăng ký ngay"    | Link điều hướng sang màn hình Đăng ký        | Link      | I   | N        | -               | -          | -          | -            | -               | Màu brand-500, hover underline, text: "Chưa có tài khoản? Đăng ký ngay"   |
 
 ### 1.2. Test case chính
 
@@ -38,16 +38,18 @@
 
 ## 2. Đăng ký (Dang-ki.jpg)
 
-### 2.1. Field
+### 2.1. Định nghĩa hạng mục màn hình
 
-| STT | Field             | Control  | I/O | Req | Kiểu dữ liệu | Min | Max | Ghi chú            |
-| --- | ----------------- | -------- | --- | --- | ------------ | --- | --- | ------------------ |
-| 1   | Họ và tên         | Textbox  | I   | Y   | String       | 1   | 255 |                    |
-| 2   | Email             | Textbox  | I   | Y   | Email        | 1   | 255 | Unique             |
-| 3   | Mật khẩu          | Password | I   | Y   | String       | 8   | 128 | Policy mạnh        |
-| 4   | Xác nhận mật khẩu | Password | I   | Y   | String       | 8   | 128 | Phải trùng field 3 |
-| 5   | Số điện thoại     | Textbox  | I   | Y   | String       | 9   | 12  | Chỉ số             |
-| 6   | Đăng ký tài khoản | Button   | I   | Y   | -            | -   | -   | Submit             |
+| No. | Tên hạng mục màn hình   | Mô tả                                    | Định dạng | I/O | Bắt buộc | Place Holder          | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                      |
+| --- | ----------------------- | ---------------------------------------- | --------- | --- | -------- | --------------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------------------------------------------- |
+| 1   | Tên người dùng          | Textbox để nhập tên đăng nhập (username) | Textbox   | I   | Y        | "devmartvn"           | 1          | 255        | String       | ""              | Icon: fa-user, required, trim() khi submit, unique                        |
+| 2   | Email                   | Textbox để nhập email                    | Textbox   | I   | Y        | "devmartvn@gmail.com" | 1          | 255        | Email        | ""              | Icon: fa-envelope, required, validate email format, unique                |
+| 3   | Mật khẩu                | Textbox để nhập mật khẩu                 | Password  | I   | Y        | "Tạo mật khẩu"        | 8          | 128        | String       | ""              | Icon: fa-lock, required, min 8 ký tự, policy mạnh                         |
+| 4   | Xác nhận mật khẩu       | Textbox để nhập lại mật khẩu xác nhận    | Password  | I   | Y        | "Nhập lại mật khẩu"   | 8          | 128        | String       | ""              | Icon: fa-lock, required, phải trùng với mật khẩu                          |
+| 5   | Họ và tên               | Textbox để nhập họ và tên đầy đủ         | Textbox   | I   | Y        | "DevMartVN"           | 1          | 255        | String       | ""              | Icon: fa-id-card, required, trim() khi submit                             |
+| 6   | Số điện thoại           | Textbox để nhập số điện thoại            | Textbox   | I   | Y        | "0123 456 789"        | 9          | 12         | String       | ""              | Icon: fa-phone, required, chỉ nhận số, format VN                          |
+| 7   | Nút "Đăng ký tài khoản" | Button submit form đăng ký               | Button    | I   | Y        | -                     | -          | -          | -            | -               | Disabled khi loading, màu brand-500, hiển thị "Đang xử lý..." khi loading |
+| 8   | Link "Đăng nhập ngay"   | Link điều hướng sang màn hình Đăng nhập  | Link      | I   | N        | -                     | -          | -          | -            | -               | Màu brand-500, hover underline, text: "Đã có tài khoản? Đăng nhập ngay"   |
 
 ### 2.2. Test case
 
@@ -289,18 +291,18 @@ Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-d
 
 ### 12.1. Định nghĩa hạng mục màn hình
 
-| No. | Tên hạng mục màn hình | Mô tả                                                                                                                                                                    | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                     |
-| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | --------------- | ------------------------ |
-| 1   | Số dư hiện tại        | Hiển thị số dư của người dùng (nếu đã đăng nhập)                                                                                                                         | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị trong header    |
-| 2   | Các mệnh giá nhanh    | Các nút chọn nhanh danh mục sản phẩm                                                                                                                                     | Button    | O   | -        | -            | -          | -          | -             | -               | Hiển thị trong Sidebar   |
-| 3   | List sản phẩm         | 1. Hiển thị thông tin list sản phẩm theo danh mục đã chọn<br>2. Hiển thị mặc định 20 sản phẩm, có phân trang<br>3. Thứ tự hiển thị theo thứ tự từ API                    | Object    | O   | -        | -            | -          | -          | Array         | []              | Grid layout responsive   |
-| 4   | Image quảng cáo       | Hiển thị image banner quảng cáo                                                                                                                                          | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
-| 5   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 2)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
-| 6   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 3)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
-| 7   | Tên và image sản phẩm | 1. Hiển thị image sản phẩm<br>2. Hiển thị tên sản phẩm, hiển thị tối đa 2 dòng, những kí tự còn lại hiển thị dạng ...<br>3. Click di chuyển vào màn hình detail sản phẩm | Label     | O   | -        | -            | -          | -          | String        | -               | Trong CodeCard component |
-| 8   | Giá gốc sản phẩm      | 1. Hiển thị thông tin giá gốc của sản phẩm<br>2. Format hiển thị gạch ngang giá gốc sản phẩm (nếu có)                                                                    | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị line-through    |
-| 9   | Giá sản phẩm          | 1. Hiển thị giá hiện tại của sản phẩm<br>2. Nếu giá = 0 hoặc null, hiển thị "MIỄN PHÍ"                                                                                   | Label     | O   | -        | -            | -          | -          | Number/String | 0               | Màu brand-500            |
-| 10  | Icon đánh giá sao     | Hiển thị mặc định 5 sao cho tất cả các sản phẩm                                                                                                                          | Label     | O   | -        | -            | -          | -          | Number        | 5               | Màu vàng                 |
+| No. | Tên hạng mục màn hình | Mô tả                                                                                                                                                                    | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                                                                                  |
+| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | --------------- | ------------------------------------------------------------------------------------- |
+| 1   | Số dư hiện tại        | Hiển thị số dư của người dùng (nếu đã đăng nhập)                                                                                                                         | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị trong header, format VND                                                     |
+| 2   | Các mệnh giá nhanh    | Các nút chọn nhanh danh mục sản phẩm                                                                                                                                     | Button    | O   | -        | -            | -          | -          | String        | "all"           | Hiển thị trong Sidebar, danh mục: Tất cả, Website, Game, Mobile, Desktop, Plugin, API |
+| 3   | List sản phẩm         | 1. Hiển thị thông tin list sản phẩm theo danh mục đã chọn<br>2. Hiển thị mặc định 20 sản phẩm, có phân trang<br>3. Thứ tự hiển thị theo thứ tự từ API                    | Object    | O   | -        | -            | -          | -          | Array         | []              | Grid layout responsive: 3 cột (desktop), 2 cột (tablet), 1 cột (mobile)               |
+| 4   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 1)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String (URL)  | slide1.jpg      | Swiper slider tự động, delay 3000ms                                                   |
+| 5   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 2)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String (URL)  | slide2.jpg      | Swiper slider tự động, delay 3000ms                                                   |
+| 6   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 3)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String (URL)  | slide3.jpg      | Swiper slider tự động, delay 3000ms                                                   |
+| 7   | Tên và image sản phẩm | 1. Hiển thị image sản phẩm<br>2. Hiển thị tên sản phẩm, hiển thị tối đa 2 dòng, những kí tự còn lại hiển thị dạng ...<br>3. Click di chuyển vào màn hình detail sản phẩm | Label     | O   | -        | -            | 1          | 255        | String        | -               | Trong CodeCard component, line-clamp-2                                                |
+| 8   | Giá gốc sản phẩm      | 1. Hiển thị thông tin giá gốc của sản phẩm<br>2. Format hiển thị gạch ngang giá gốc sản phẩm (nếu có)                                                                    | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị line-through, màu gray-400                                                   |
+| 9   | Giá sản phẩm          | 1. Hiển thị giá hiện tại của sản phẩm<br>2. Nếu giá = 0 hoặc null, hiển thị "MIỄN PHÍ"                                                                                   | Label     | O   | -        | -            | -          | -          | Number/String | 0               | Màu brand-500, format VND nếu có giá                                                  |
+| 10  | Icon đánh giá sao     | Hiển thị mặc định 5 sao cho tất cả các sản phẩm                                                                                                                          | Label     | O   | -        | -            | -          | -          | Number        | 5               | Màu vàng (text-yellow-400), hiển thị 5 sao                                            |
 
 ### 12.2. Test case chính
 
@@ -323,15 +325,15 @@ Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-d
 
 ### 13.1. Định nghĩa hạng mục màn hình
 
-| No. | Tên hạng mục màn hình          | Mô tả                                                            | Định dạng | I/O | Bắt buộc | Place Holder               | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                  |
-| --- | ------------------------------ | ---------------------------------------------------------------- | --------- | --- | -------- | -------------------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------- |
-| 1   | Số dư hiện tại                 | Hiển thị số dư của người dùng                                    | Label     | O   | -        | -                          | -          | -          | Number       | 0               | Format VND                            |
-| 2   | Các mệnh giá nhanh             | Các nút chọn nhanh số tiền để nạp: 50k, 100k, 200k, 500k, 1M, 2M | Button    | I   | N        | -                          | -          | -          | Number       | 100000          | Grid 3 cột                            |
-| 3   | Nhập số tiền khác              | Textbox để nhập số tiền tùy chỉnh                                | Textbox   | I   | N        | "Nhập số tiền muốn nạp..." | -          | -          | Number       | -               | Chỉ nhận số                           |
-| 4   | QR VietQR                      | Mã QR theo số tiền và nội dung chuyển khoản                      | Image     | O   | -        | -                          | -          | -          | String       | -               | Tự động cập nhật theo số tiền         |
-| 5   | Nội dung chuyển khoản          | Hiển thị nội dung chuyển khoản cần nhập                          | Label     | O   | -        | -                          | -          | -          | String       | -               | Format: "naptien {username} {amount}" |
-| 6   | Nút "Xác nhận đã chuyển khoản" | Xác nhận đã thanh toán                                           | Button    | I   | Y        | -                          | -          | -          | -            | -               | Disabled nếu chưa login               |
-| 7   | Lịch sử nạp tiền               | Bảng hiển thị lịch sử: Thời gian, số tiền, số dư sau, trạng thái | Table     | O   | -        | -                          | -          | -          | Array        | []              | Chỉ hiển thị DEPOSIT                  |
+| No. | Tên hạng mục màn hình          | Mô tả                                                            | Định dạng | I/O | Bắt buộc | Place Holder               | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                                                                                                                  |
+| --- | ------------------------------ | ---------------------------------------------------------------- | --------- | --- | -------- | -------------------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Số dư hiện tại                 | Hiển thị số dư của người dùng                                    | Label     | O   | -        | -                          | -          | -          | Number       | 0               | Format VND, hiển thị trong header hoặc card                                                                                           |
+| 2   | Các mệnh giá nhanh             | Các nút chọn nhanh số tiền để nạp: 50k, 100k, 200k, 500k, 1M, 2M | Button    | I   | N        | -                          | -          | -          | Number       | 100000          | Grid 3 cột, giá trị: 50000, 100000, 200000, 500000, 1000000, 2000000                                                                  |
+| 3   | Nhập số tiền khác              | Textbox để nhập số tiền tùy chỉnh                                | Textbox   | I   | N        | "Nhập số tiền muốn nạp..." | -          | -          | Number       | ""              | Chỉ nhận số, min: 50000, tự động format khi nhập                                                                                      |
+| 4   | QR VietQR                      | Mã QR theo số tiền và nội dung chuyển khoản                      | Image     | O   | -        | -                          | -          | -          | String (URL) | -               | Tự động cập nhật theo số tiền, URL: https://img.vietqr.io/image/ACB-17059951-compact2.png                                             |
+| 5   | Nội dung chuyển khoản          | Hiển thị nội dung chuyển khoản cần nhập                          | Label     | O   | -        | -                          | -          | 255        | String       | -               | Format: "naptien {username} {amount}", có nút sao chép                                                                                |
+| 6   | Nút "Xác nhận đã chuyển khoản" | Xác nhận đã thanh toán                                           | Button    | I   | Y        | -                          | -          | -          | Boolean      | false           | Disabled nếu chưa login, hiển thị loading khi đang kiểm tra                                                                           |
+| 7   | Lịch sử nạp tiền               | Bảng hiển thị lịch sử: Thời gian, số tiền, số dư sau, trạng thái | Table     | O   | -        | -                          | -          | -          | Array        | []              | Chỉ hiển thị DEPOSIT, có nút refresh, format: Thời gian (dd/mm/yyyy HH:mm), Số tiền (+format VND), Số dư sau, Trạng thái (Thành công) |
 
 ### 13.2. Test case chính
 
@@ -354,18 +356,18 @@ Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-d
 
 ### 14.1. Định nghĩa hạng mục màn hình
 
-| No. | Tên hạng mục màn hình | Mô tả                                   | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                        |
-| --- | --------------------- | --------------------------------------- | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | --------------- | --------------------------- |
-| 1   | Tên sản phẩm          | Hiển thị tên đầy đủ của sản phẩm        | Label     | O   | -        | -            | -          | -          | String        | -               | Font size lớn, bold         |
-| 2   | Image sản phẩm        | Hiển thị image sản phẩm trong gallery   | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider               |
-| 3   | Giá sản phẩm          | Hiển thị giá bán của sản phẩm           | Label     | O   | -        | -            | -          | -          | Number/String | 0               | Nếu = 0 hiển thị "MIỄN PHÍ" |
-| 4   | Lượt xem              | Hiển thị số lượt xem sản phẩm           | Label     | O   | -        | -            | -          | -          | Number        | 0               | Format số                   |
-| 5   | Ngày tạo              | Hiển thị ngày tạo sản phẩm              | Label     | O   | -        | -            | -          | -          | Date          | -               | Format dd/mm/yyyy           |
-| 6   | Mô tả chi tiết        | Hiển thị mô tả chi tiết sản phẩm (HTML) | HTML      | O   | -        | -            | -          | -          | String        | -               | Render HTML                 |
-| 7   | Link demo             | Hiển thị link demo sản phẩm (nếu có)    | Link      | O   | -        | -            | -          | -          | String        | -               | Mở tab mới                  |
-| 8   | Thông tin người bán   | Hiển thị avatar, tên người bán          | Object    | O   | -        | -            | -          | -          | Object        | -               | Có nút "Xem shop"           |
-| 9   | Nút "Mua ngay"        | Button để mua sản phẩm                  | Button    | I   | Y        | -            | -          | -          | -             | -               | Yêu cầu đăng nhập           |
-| 10  | Icon đánh giá sao     | Hiển thị đánh giá sao (mặc định 5 sao)  | Label     | O   | -        | -            | -          | -          | Number        | 5               | Màu vàng                    |
+| No. | Tên hạng mục màn hình | Mô tả                                   | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default                        | Note                                                                    |
+| --- | --------------------- | --------------------------------------- | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | -------------------------------------- | ----------------------------------------------------------------------- |
+| 1   | Tên sản phẩm          | Hiển thị tên đầy đủ của sản phẩm        | Label     | O   | -        | -            | 1          | 255        | String        | -                                      | Font size: text-2xl md:text-3xl, bold, màu gray-900                     |
+| 2   | Image sản phẩm        | Hiển thị image sản phẩm trong gallery   | Image     | O   | -        | -            | -          | -          | String (URL)  | slide1.jpg                             | Swiper slider với pagination, fallback: /images/logo.png                |
+| 3   | Giá sản phẩm          | Hiển thị giá bán của sản phẩm           | Label     | O   | -        | -            | -          | -          | Number/String | 0                                      | Nếu = 0 hiển thị "MIỄN PHÍ", format VND nếu có giá, màu brand-500       |
+| 4   | Lượt xem              | Hiển thị số lượt xem sản phẩm           | Label     | O   | -        | -            | -          | -          | Number        | 0                                      | Format số, sử dụng hàm getFakeViewCount()                               |
+| 5   | Ngày tạo              | Hiển thị ngày tạo sản phẩm              | Label     | O   | -        | -            | -          | -          | Date          | -                                      | Format dd/mm/yyyy, hiển thị "Đang cập nhật" nếu không có                |
+| 6   | Mô tả chi tiết        | Hiển thị mô tả chi tiết sản phẩm (HTML) | HTML      | O   | -        | -            | -          | -          | String (HTML) | "<p>Sản phẩm đang cập nhật mô tả.</p>" | Render HTML với class prose, strip HTML tags nếu cần                    |
+| 7   | Link demo             | Hiển thị link demo sản phẩm (nếu có)    | Link      | O   | -        | -            | -          | 500        | String (URL)  | -                                      | Mở tab mới (target="\_blank", rel="noreferrer"), màu brand-500          |
+| 8   | Thông tin người bán   | Hiển thị avatar, tên người bán          | Object    | O   | -        | -            | -          | -          | Object        | -                                      | Avatar: 14x14 rounded-2xl, fallback: chữ cái đầu, có nút "Xem shop"     |
+| 9   | Nút "Mua ngay"        | Button để mua sản phẩm                  | Button    | I   | Y        | -            | -          | -          | Boolean       | false                                  | Yêu cầu đăng nhập, hiển thị confirm dialog, màu brand-500               |
+| 10  | Icon đánh giá sao     | Hiển thị đánh giá sao (mặc định 5 sao)  | Label     | O   | -        | -            | -          | -          | Number        | 5                                      | Màu vàng (text-yellow-400), hiển thị 5 sao, có thể hiển thị số đánh giá |
 
 ### 14.2. Test case chính
 
