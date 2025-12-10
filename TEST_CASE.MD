@@ -285,4 +285,105 @@ Các màn hình admin (Thong-ke-tong-quan.jpg, Quan-ly-nguoi-dung.jpg, Quan-ly-d
 
 ---
 
+## 12. Trang chủ - Danh sách sản phẩm (HomePage)
+
+### 12.1. Định nghĩa hạng mục màn hình
+
+| No. | Tên hạng mục màn hình | Mô tả                                                                                                                                                                    | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                     |
+| --- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | --------------- | ------------------------ |
+| 1   | Số dư hiện tại        | Hiển thị số dư của người dùng (nếu đã đăng nhập)                                                                                                                         | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị trong header    |
+| 2   | Các mệnh giá nhanh    | Các nút chọn nhanh danh mục sản phẩm                                                                                                                                     | Button    | O   | -        | -            | -          | -          | -             | -               | Hiển thị trong Sidebar   |
+| 3   | List sản phẩm         | 1. Hiển thị thông tin list sản phẩm theo danh mục đã chọn<br>2. Hiển thị mặc định 20 sản phẩm, có phân trang<br>3. Thứ tự hiển thị theo thứ tự từ API                    | Object    | O   | -        | -            | -          | -          | Array         | []              | Grid layout responsive   |
+| 4   | Image quảng cáo       | Hiển thị image banner quảng cáo                                                                                                                                          | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
+| 5   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 2)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
+| 6   | Image quảng cáo       | Hiển thị image banner quảng cáo (slide 3)                                                                                                                                | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider tự động    |
+| 7   | Tên và image sản phẩm | 1. Hiển thị image sản phẩm<br>2. Hiển thị tên sản phẩm, hiển thị tối đa 2 dòng, những kí tự còn lại hiển thị dạng ...<br>3. Click di chuyển vào màn hình detail sản phẩm | Label     | O   | -        | -            | -          | -          | String        | -               | Trong CodeCard component |
+| 8   | Giá gốc sản phẩm      | 1. Hiển thị thông tin giá gốc của sản phẩm<br>2. Format hiển thị gạch ngang giá gốc sản phẩm (nếu có)                                                                    | Label     | O   | -        | -            | -          | -          | Number        | 0               | Hiển thị line-through    |
+| 9   | Giá sản phẩm          | 1. Hiển thị giá hiện tại của sản phẩm<br>2. Nếu giá = 0 hoặc null, hiển thị "MIỄN PHÍ"                                                                                   | Label     | O   | -        | -            | -          | -          | Number/String | 0               | Màu brand-500            |
+| 10  | Icon đánh giá sao     | Hiển thị mặc định 5 sao cho tất cả các sản phẩm                                                                                                                          | Label     | O   | -        | -            | -          | -          | Number        | 5               | Màu vàng                 |
+
+### 12.2. Test case chính
+
+| ID               | Mục tiêu                        | Tiền điều kiện    | Bước thực hiện                       | Kết quả mong đợi                                              | Priority |
+| ---------------- | ------------------------------- | ----------------- | ------------------------------------ | ------------------------------------------------------------- | -------- |
+| TC-HOME-FLASH-01 | Hiển thị số dư khi đã đăng nhập | User đã đăng nhập | Truy cập trang chủ                   | Header hiển thị số dư của user                                | High     |
+| TC-HOME-FLASH-02 | Chọn danh mục từ sidebar        | -                 | Click vào một danh mục trong sidebar | Danh sách sản phẩm lọc theo danh mục đã chọn                  | High     |
+| TC-HOME-FLASH-03 | Hiển thị banner quảng cáo       | -                 | Truy cập trang chủ                   | Banner slider tự động chuyển slide sau 3 giây                 | Medium   |
+| TC-HOME-FLASH-04 | Hiển thị danh sách sản phẩm     | -                 | Truy cập trang chủ                   | Hiển thị grid 3 cột (desktop), 2 cột (tablet), 1 cột (mobile) | High     |
+| TC-HOME-FLASH-05 | Tên sản phẩm quá dài            | -                 | Xem sản phẩm có tên dài              | Tên sản phẩm hiển thị tối đa 2 dòng, còn lại hiển thị ...     | Medium   |
+| TC-HOME-FLASH-06 | Click vào sản phẩm              | -                 | Click vào card sản phẩm              | Điều hướng tới trang chi tiết sản phẩm                        | High     |
+| TC-HOME-FLASH-07 | Sản phẩm miễn phí               | -                 | Xem sản phẩm có giá = 0              | Hiển thị "MIỄN PHÍ" thay vì giá                               | Medium   |
+| TC-HOME-FLASH-08 | Hiển thị đánh giá sao           | -                 | Xem bất kỳ sản phẩm nào              | Hiển thị 5 sao màu vàng                                       | Low      |
+| TC-HOME-FLASH-09 | Phân trang sản phẩm             | Có > 20 sản phẩm  | Scroll xuống cuối trang              | Hiển thị nút phân trang, click chuyển trang                   | High     |
+| TC-HOME-FLASH-10 | Tìm kiếm sản phẩm               | -                 | Nhập từ khóa vào search bar, Enter   | Danh sách sản phẩm lọc theo từ khóa                           | High     |
+
+---
+
+## 13. Nạp tiền (WalletTopupPage)
+
+### 13.1. Định nghĩa hạng mục màn hình
+
+| No. | Tên hạng mục màn hình          | Mô tả                                                            | Định dạng | I/O | Bắt buộc | Place Holder               | Min-length | Max-length | Kiểu dữ liệu | Giá trị default | Note                                  |
+| --- | ------------------------------ | ---------------------------------------------------------------- | --------- | --- | -------- | -------------------------- | ---------- | ---------- | ------------ | --------------- | ------------------------------------- |
+| 1   | Số dư hiện tại                 | Hiển thị số dư của người dùng                                    | Label     | O   | -        | -                          | -          | -          | Number       | 0               | Format VND                            |
+| 2   | Các mệnh giá nhanh             | Các nút chọn nhanh số tiền để nạp: 50k, 100k, 200k, 500k, 1M, 2M | Button    | I   | N        | -                          | -          | -          | Number       | 100000          | Grid 3 cột                            |
+| 3   | Nhập số tiền khác              | Textbox để nhập số tiền tùy chỉnh                                | Textbox   | I   | N        | "Nhập số tiền muốn nạp..." | -          | -          | Number       | -               | Chỉ nhận số                           |
+| 4   | QR VietQR                      | Mã QR theo số tiền và nội dung chuyển khoản                      | Image     | O   | -        | -                          | -          | -          | String       | -               | Tự động cập nhật theo số tiền         |
+| 5   | Nội dung chuyển khoản          | Hiển thị nội dung chuyển khoản cần nhập                          | Label     | O   | -        | -                          | -          | -          | String       | -               | Format: "naptien {username} {amount}" |
+| 6   | Nút "Xác nhận đã chuyển khoản" | Xác nhận đã thanh toán                                           | Button    | I   | Y        | -                          | -          | -          | -            | -               | Disabled nếu chưa login               |
+| 7   | Lịch sử nạp tiền               | Bảng hiển thị lịch sử: Thời gian, số tiền, số dư sau, trạng thái | Table     | O   | -        | -                          | -          | -          | Array        | []              | Chỉ hiển thị DEPOSIT                  |
+
+### 13.2. Test case chính
+
+| ID          | Mục tiêu                             | Tiền điều kiện                     | Bước thực hiện                                 | Kết quả mong đợi                                           | Priority |
+| ----------- | ------------------------------------ | ---------------------------------- | ---------------------------------------------- | ---------------------------------------------------------- | -------- |
+| TC-TOPUP-01 | Hiển thị số dư hiện tại              | User đã đăng nhập                  | Truy cập trang nạp tiền                        | Hiển thị số dư của user, format VND                        | High     |
+| TC-TOPUP-02 | Chọn mệnh giá nhanh                  | -                                  | Click vào button 100.000 VND                   | Field số tiền và QR code cập nhật theo 100.000             | High     |
+| TC-TOPUP-03 | Nhập số tiền không hợp lệ (dưới min) | -                                  | Nhập 10.000, click xác nhận                    | Báo lỗi "Số tiền nạp tối thiểu 50.000đ"                    | High     |
+| TC-TOPUP-04 | Nhập số tiền tùy chỉnh               | -                                  | Nhập 300.000 vào textbox                       | QR code và nội dung chuyển khoản cập nhật theo 300.000     | High     |
+| TC-TOPUP-05 | QR code tự động cập nhật             | -                                  | Thay đổi số tiền (chọn mệnh giá hoặc nhập tay) | QR code tự động cập nhật với số tiền mới                   | High     |
+| TC-TOPUP-06 | Nội dung chuyển khoản đúng format    | User đã đăng nhập                  | Chọn số tiền bất kỳ                            | Hiển thị "naptien {username} {số tiền}"                    | High     |
+| TC-TOPUP-07 | Xác nhận đã chuyển khoản             | User đã đăng nhập, đã chuyển khoản | Click "Xác nhận đã chuyển khoản"               | Hệ thống kiểm tra và cập nhật số dư nếu có giao dịch       | High     |
+| TC-TOPUP-08 | Hiển thị lịch sử nạp tiền            | User đã đăng nhập, có lịch sử      | Truy cập trang nạp tiền                        | Bảng hiển thị các giao dịch nạp tiền với đầy đủ thông tin  | High     |
+| TC-TOPUP-09 | Chưa đăng nhập                       | User chưa đăng nhập                | Truy cập trang nạp tiền                        | Hiển thị cảnh báo yêu cầu đăng nhập, nút xác nhận disabled | High     |
+| TC-TOPUP-10 | Sao chép nội dung chuyển khoản       | -                                  | Click nút "Sao chép" bên cạnh nội dung         | Nội dung được sao chép vào clipboard, hiển thị thông báo   | Medium   |
+
+---
+
+## 14. Chi tiết sản phẩm (ProductDetailPage)
+
+### 14.1. Định nghĩa hạng mục màn hình
+
+| No. | Tên hạng mục màn hình | Mô tả                                   | Định dạng | I/O | Bắt buộc | Place Holder | Min-length | Max-length | Kiểu dữ liệu  | Giá trị default | Note                        |
+| --- | --------------------- | --------------------------------------- | --------- | --- | -------- | ------------ | ---------- | ---------- | ------------- | --------------- | --------------------------- |
+| 1   | Tên sản phẩm          | Hiển thị tên đầy đủ của sản phẩm        | Label     | O   | -        | -            | -          | -          | String        | -               | Font size lớn, bold         |
+| 2   | Image sản phẩm        | Hiển thị image sản phẩm trong gallery   | Image     | O   | -        | -            | -          | -          | String        | -               | Swiper slider               |
+| 3   | Giá sản phẩm          | Hiển thị giá bán của sản phẩm           | Label     | O   | -        | -            | -          | -          | Number/String | 0               | Nếu = 0 hiển thị "MIỄN PHÍ" |
+| 4   | Lượt xem              | Hiển thị số lượt xem sản phẩm           | Label     | O   | -        | -            | -          | -          | Number        | 0               | Format số                   |
+| 5   | Ngày tạo              | Hiển thị ngày tạo sản phẩm              | Label     | O   | -        | -            | -          | -          | Date          | -               | Format dd/mm/yyyy           |
+| 6   | Mô tả chi tiết        | Hiển thị mô tả chi tiết sản phẩm (HTML) | HTML      | O   | -        | -            | -          | -          | String        | -               | Render HTML                 |
+| 7   | Link demo             | Hiển thị link demo sản phẩm (nếu có)    | Link      | O   | -        | -            | -          | -          | String        | -               | Mở tab mới                  |
+| 8   | Thông tin người bán   | Hiển thị avatar, tên người bán          | Object    | O   | -        | -            | -          | -          | Object        | -               | Có nút "Xem shop"           |
+| 9   | Nút "Mua ngay"        | Button để mua sản phẩm                  | Button    | I   | Y        | -            | -          | -          | -             | -               | Yêu cầu đăng nhập           |
+| 10  | Icon đánh giá sao     | Hiển thị đánh giá sao (mặc định 5 sao)  | Label     | O   | -        | -            | -          | -          | Number        | 5               | Màu vàng                    |
+
+### 14.2. Test case chính
+
+| ID                | Mục tiêu                        | Tiền điều kiện                          | Bước thực hiện                           | Kết quả mong đợi                                                    | Priority |
+| ----------------- | ------------------------------- | --------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------- | -------- |
+| TC-PROD-DETAIL-01 | Hiển thị thông tin sản phẩm     | -                                       | Truy cập trang chi tiết sản phẩm         | Hiển thị đầy đủ tên, giá, mô tả, hình ảnh                           | High     |
+| TC-PROD-DETAIL-02 | Gallery hình ảnh                | Sản phẩm có nhiều hình                  | Xem gallery                              | Swiper slider cho phép xem nhiều hình, có pagination                | Medium   |
+| TC-PROD-DETAIL-03 | Sản phẩm miễn phí               | Sản phẩm có giá = 0                     | Xem chi tiết sản phẩm miễn phí           | Hiển thị "MIỄN PHÍ" thay vì giá                                     | Medium   |
+| TC-PROD-DETAIL-04 | Mô tả HTML                      | Sản phẩm có mô tả HTML                  | Xem mô tả                                | Render đúng HTML, hiển thị format đẹp                               | Medium   |
+| TC-PROD-DETAIL-05 | Link demo                       | Sản phẩm có link demo                   | Click vào link demo                      | Mở link trong tab mới                                               | Low      |
+| TC-PROD-DETAIL-06 | Thông tin người bán             | -                                       | Xem phần người bán                       | Hiển thị avatar (hoặc chữ cái đầu), tên người bán                   | High     |
+| TC-PROD-DETAIL-07 | Nút "Xem shop"                  | -                                       | Click "Xem shop"                         | Điều hướng tới trang shop của người bán                             | Medium   |
+| TC-PROD-DETAIL-08 | Mua sản phẩm khi chưa đăng nhập | User chưa đăng nhập                     | Click "Mua ngay"                         | Hiển thị thông báo yêu cầu đăng nhập, có nút chuyển tới trang login | High     |
+| TC-PROD-DETAIL-09 | Mua sản phẩm khi đã đăng nhập   | User đã đăng nhập, có đủ số dư          | Click "Mua ngay", xác nhận               | Mua thành công, số dư trừ đi, hiển thị thông báo thành công         | High     |
+| TC-PROD-DETAIL-10 | Mua sản phẩm không đủ số dư     | User đã đăng nhập, số dư < giá sản phẩm | Click "Mua ngay"                         | Hiển thị thông báo lỗi "Không đủ số dư"                             | High     |
+| TC-PROD-DETAIL-11 | Hiển thị lượt xem               | -                                       | Xem chi tiết sản phẩm                    | Hiển thị số lượt xem (có thể là fake count)                         | Low      |
+| TC-PROD-DETAIL-12 | Sản phẩm không tồn tại          | -                                       | Truy cập URL với productId không tồn tại | Hiển thị thông báo "Không tìm thấy sản phẩm", có nút quay lại       | High     |
+
+---
+
 **Kết thúc file**
